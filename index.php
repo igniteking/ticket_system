@@ -163,31 +163,37 @@ if (isset($_SESSION['email'])) {
                                                                         </div>
                                                                         <div class="form-group col-md-4">
                                                                             <label for="quantity">Quantity</label>
-                                                                            <input type="number" class="form-control form-control-lg col-md-4" id="quantity" onchange="getQuantity(this.value)" name="quantity" placeholder="Quantity">
+                                                                            <input type="number" class="form-control form-control-lg col-md-4" id="quantity" onchange="billTotal(this.value)" name="quantity" placeholder="Quantity">
                                                                         </div>
                                                                         <div class="form-group col-md-4">
                                                                             <label for="date">Check-In Date</label>
                                                                             <input type="date" class="form-control form-control-lg col-md-4" id="date" name="ticket_check_in_date" min="<?= date('Y-m-d') ?>" value="<?= date('Y-m-d') ?>" placeholder="Check-In Date">
                                                                         </div>
 
-                                                                        <label for="product">Add Product(s) </label>
-                                                                        <?php $get_category = mysqli_query($conn, "SELECT * FROM product");
-                                                                        while ($row = mysqli_fetch_array($get_category)) {
-                                                                            $product_id = $row['product_id'];
-                                                                            $product_name = $row['product_name'];
-                                                                            $product_price = $row['product_price'];
-                                                                            @++$i;
-                                                                            echo '
-                                                                                <div class="form-group col-md-3">
-                                                                                <div class="form-check">
-                                                                                    <label class="form-check-label">
-                                                                                        <input type="checkbox" name="product[]" value="' . $product_id . '" onchange="getProduct(' . $product_price . ')" id="product" class="form-check-input">
-                                                                                        ' . $product_name . '
-                                                                                    </label>
-                                                                                    </div>
-                                                                                    </div>';
-                                                                        }
-                                                                        ?>
+                                                                        <label for="">Add Product(s) </label>
+                                                                        <div class="form-group col-md-5">
+                                                                            <select class="js-example-basic-multiple w-100 form-control-lg" name="product_name" id="product_name">
+                                                                                <?php $get_category = mysqli_query($conn, "SELECT * FROM product");
+                                                                                while ($row = mysqli_fetch_array($get_category)) {
+                                                                                    $product_id = $row['product_id'];
+                                                                                    $product_name = $row['product_name'];
+                                                                                    $product_price = $row['product_price'];
+                                                                                    @++$i;
+                                                                                    echo '
+                                                                                    <option value="' . $product_price . '">' . $product_name . '</option>
+                                                                                    ';
+                                                                                }
+                                                                                ?>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="form-group col-md-3">
+                                                                            <input type="number" class="form-control form-control-lg" id="product_quantity" name="product_quantity">
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <div class="text-white btn btn-lg btn-primary" onclick="addToCart()" name="">+</div>
+
+                                                                            <div class="text-white btn btn-lg btn-danger" onclick="removeToCart()" name="">-</div>
+                                                                        </div>
                                                                         <div id="product_demo"></div>
                                                                         <div class="form-group">
                                                                             <input type="submit" name="create_user" class="btn-lg btn btn-primary me-2 text-white col-md-12">
@@ -208,6 +214,11 @@ if (isset($_SESSION['email'])) {
                                                         <div class="card">
                                                             <div class="card-body mx-4">
                                                                 <div class="container">
+                                                                    <?php
+                                                                    $fetch_ticket = mysqli_query($conn, "SELECT * FROM ticket");
+                                                                    while ($row = mysqli_fetch_array($fetch_ticket)) {
+                                                                    }
+                                                                    ?>
                                                                     <div class="row">
                                                                         <ul class="list-unstyled row">
                                                                             <li class="text-muted mt-1 col-md-6"><span class="text-black">Invoice</span> #<z id="bill_invoice"></z>
@@ -222,7 +233,7 @@ if (isset($_SESSION['email'])) {
                                                                             <p id="package_name">Package Name</p>
                                                                         </div>
                                                                         <div class="col-xl-2">
-                                                                            <p class="float-end">₹ <z id="package_price"> 00.00</z>
+                                                                            <p class="float-end">₹ <z id="package_price">00.00</z>
                                                                             </p>
                                                                         </div>
                                                                         <hr>
@@ -237,12 +248,13 @@ if (isset($_SESSION['email'])) {
                                                                         </div>
                                                                         <hr>
                                                                     </div>
+                                                                    <div id="bill_prod" class="row"></div>
                                                                     <div class="row">
                                                                         <div class="col-xl-10">
                                                                             <p>Products Total</p>
                                                                         </div>
                                                                         <div class="col-xl-2">
-                                                                            <p class="float-end" id="bill_product">₹00.00</p>
+                                                                            <p class="float-end" id="product_total"></p>
                                                                         </div>
                                                                         <hr style="border: 2px solid black;">
                                                                         <div class="row text-black">
@@ -250,16 +262,15 @@ if (isset($_SESSION['email'])) {
                                                                                 <p class="float-end fw-bold">Total: ₹<z id="bill_total">00.00</z>
                                                                                 </p>
                                                                             </div>
-                                                                            <hr style="border: 2px solid black;">
                                                                         </div>
-                                                                        <div class="row">
-                                                                            <button onclick="printDiv('ticket')" class="btn btn-outline-info">Print</button>
-                                                                            <button onclick="DownloadPdf('ticket')" class="btn btn-outline-warning">Download</button>
-                                                                        </div>
+                                                                        <hr style="border: 2px solid black;">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <button onclick="printDiv('ticket')" class="btn btn-info">Print</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -270,34 +281,51 @@ if (isset($_SESSION['email'])) {
                         </div>
                     </div>
                     <script type="text/javascript">
-                        function getProduct(str) {
-                            checkbox = document.getElementById("product");
-                            var loop = document.querySelectorAll('#product').length
-                            console.log(loop);
-                            if (checkbox.checked == true) {
-                                document.getElementById("bill_product").innerHTML = checkbox.value;
-                                console.log(checkbox.value);
-                            } else if (checkbox.checked == false) {
-                                document.getElementById("bill_product").innerHTML = '';
-                                console.log("unchecked");
+                        function billTotal(str) {
+                            if (str.length > 0) {
+                                var quantity = str;
                             }
-                            // let product_price = "";
-                            // new_product_price = product_price + str;
-                            // console.log(new_product_price);
-                            // document.getElementById("bill_product").innerHTML = '<div class="col-xl-2"><p class="float-end">' + new_product_price + "</p>";
-                            // for (var i = 0; i < 4; i++) {
-                            //     // product_price[i] = document.getElementById('product' + i).value;
-                            // }
+                            document.getElementById('bill_quantity').innerHTML = quantity;
+                            var package_price = document.getElementById('package_price').innerHTML;
+                            var product_total = document.getElementById('product_total').innerHTML;
+                            console.log(product_total.length)
+                            if (product_total.length > 0) {
+                                var new_product_price = parseInt(product_total);
+                                console.log(new_product_price)
+                                total = package_price * quantity;
+                                total = total + new_product_price;
+                                console.log(total)
+                            } else {
+                                var total = package_price * quantity;
+                            }
+                            document.getElementById('bill_total').innerHTML = total;
                         }
 
-                        function DownloadPdf(divName) {
-                            var a = document.body.appendChild(
-                                document.createElement("a")
-                            );
-                            a.download = divName + ".html";
-                            a.href = "data:text/html," + document.getElementById(divName).innerHTML;
-                            a.click(); //Trigger a click on the element
+                        function removeToCart() {
+                            remove = document.querySelectorAll('#delete');
+                            remove.forEach(box => {
+                                box.remove();
+                            });
+                            document.getElementById('product_total').innerHTML = '';
+                        }
 
+                        function addToCart() {
+                            var product_name = document.getElementById('product_name');
+                            var product_quantity = document.getElementById('product_quantity').value;
+                            var product_price = product_name.value;
+                            var product_name = product_name.options[product_name.selectedIndex].text;
+                            document.getElementById('bill_prod').innerHTML += '<div class="col-xl-10" id="delete"><p>' + product_name + '</p></div><div id="delete" class="col-xl-2"><p class="float-end">X' + product_quantity + '</p></div>';
+                            var sum = product_quantity * product_price;
+                            const myPara = document.getElementById("product_total");
+                            if (myPara.innerHTML.length > 0) {
+                                // Get the value of the innerHTML and convert it to a number
+                                var innerValue = parseInt(myPara.innerHTML);
+                                sum = innerValue + sum;
+                            }
+                            document.getElementById('product_total').innerHTML = sum;
+                            var str = document.getElementById('bill_quantity').innerHTML;
+
+                            billTotal(str);
                         }
 
                         function printDiv(divName) {
@@ -339,49 +367,17 @@ if (isset($_SESSION['email'])) {
                                 if (package_name == "AMUSEMENT PARK") {
                                     price = "600.00";
                                 } else if (package_name == "WUNDER WATER") {
-                                    price = "1,250.00";
+                                    price = "1250.00";
                                 } else if (package_name == "COMBO – AMUSEMENT PARK + WATER PARK") {
-                                    price = "1,300.00";
+                                    price = "1300.00";
                                 } else if (package_name == "Yearly Membership – Couple") {
-                                    price = "5,990.00";
+                                    price = "5990.00";
                                 } else if (package_name == "Yearly Membership – Family") {
-                                    price = "10,990.00";
+                                    price = "10990.00";
                                 }
                             }
                             document.getElementById('package_name').innerHTML = package_name;
                             document.getElementById('package_price').innerHTML = price;
-                        }
-
-                        function getQuantity(str) {
-                            var quantity = str;
-                            document.getElementById('bill_quantity').innerHTML = quantity;
-                        }
-
-                        document.getElementById("ticket_types").oninput = function() {
-                            if (document.getElementById('quantity').value != null && document.getElementById('ticket_types').value != null) {
-                                function billTotal() {
-                                    let quantity = document.getElementById('quantity').value;
-                                    let package_price = document.getElementById('package_price').innerHTML;
-                                    console.log(package_price);
-                                    console.log(quantity);
-                                    var total_price = package_price * quantity;
-                                    document.getElementById('bill_total').innerHTML = total_price;
-                                }
-                                billTotal()
-                            }
-                        }
-                        document.getElementById("quantity").oninput = function() {
-                            if (document.getElementById('quantity').value != null && document.getElementById('ticket_types').value != null) {
-                                function billTotal() {
-                                    let quantity = document.getElementById('quantity').value;
-                                    let package_price = document.getElementById('package_price').innerHTML;
-                                    console.log(package_price);
-                                    console.log(quantity);
-                                    var total_price = package_price * quantity;
-                                    document.getElementById('bill_total').innerHTML = total_price;
-                                }
-                                billTotal()
-                            }
                         }
                     </script>
                     <?php include('./components/footer.php') ?>
