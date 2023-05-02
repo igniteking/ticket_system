@@ -51,68 +51,27 @@ if (isset($_SESSION['email'])) {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-lg-7 d-flex flex-column">
-                                                <div class="row flex-grow">
-                                                    <div class="col-12 col-lg-12 col-lg-12 grid-margin stretch-card">
-                                                        <div class="card card-rounded">
-                                                            <div class="card-body">
-                                                                <?php if (@$_GET['status'] == 1) {
-                                                                    echo '<div class="col-md-12 btn btn-success text-white">
-                                                                    <h6 class="mt-2">Ceated Successfully!</h6>
-                                                                    </div>';
-                                                                } ?>
-                                                                <div class="d-sm-flex justify-content-between align-items-start">
-                                                                    <div>
-                                                                        <h4 class="card-title card-title-dash">Create Ticket</h4>
+                                        <?php
+                                        if ($user_type == 'food_stall') { ?>
+
+                                        <?php } else { ?>
+
+                                            <div class="row">
+                                                <div class="col-lg-7 d-flex flex-column">
+                                                    <div class="row flex-grow">
+                                                        <div class="col-12 col-lg-12 col-lg-12 grid-margin stretch-card">
+                                                            <div class="card card-rounded">
+                                                                <div class="card-body">
+                                                                    <div class="d-sm-flex justify-content-between align-items-start">
+                                                                        <div>
+                                                                            <h4 class="card-title card-title-dash">Create Ticket</h4>
+                                                                        </div>
                                                                     </div>
-                                                                    <div id="performance-line-legend"></div>
-                                                                </div>
-
-                                                                <?php
-
-                                                                if (@$_POST['create_user']) {
-                                                                    $post_username = $_POST['username'];
-                                                                    $post_email = $_POST['email'];
-                                                                    $post_phone = $_POST['phone'];
-                                                                    $ticket_code = $_POST['ticket_code'];
-                                                                    $quantity = $_POST['quantity'];
-                                                                    $ticket_check_in_date = $_POST['ticket_check_in_date'];
-                                                                    $created_at = date('Y-m-d H:i:s');
-                                                                    $product = $_POST['product'];
-                                                                    $N = count($product);
-                                                                    for ($i = 0; $i < $N; $i++) {
-                                                                        ($product[$i] . " ");
-                                                                    }
-                                                                    $final_product = implode(",", $product);
-                                                                    $check_user = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM client WHERE email = '$email'"));
-                                                                    $check_ticket = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM ticket WHERE ticket_user_email = '$email'"));
-                                                                    if ($check_ticket <= 0) {
-                                                                        if ($check_user <= 0) {
-                                                                            $create_user = mysqli_query($conn, "INSERT INTO `client`(`client_code`, `username`, `email`, `phone`, `created_at`) VALUES ('$ticket_code', '$post_username','$post_email','$post_phone','$created_at')");
-                                                                        }
-                                                                        $create_ticket = mysqli_query($conn, "INSERT INTO `ticket`(`ticket_code`, `ticket_username`, `ticket_user_email`, `ticket_quantity`,`ticket_check_in_date`, `product_id`, `product_status`, `created_at`) VALUES ('$ticket_code','$post_username','$post_email','$quantity', '$ticket_check_in_date', '$final_product','pending', '$created_at')");
-                                                                        if ($create_ticket) {
-                                                                            echo "<meta http-equiv=\"refresh\" content=\"0; url=./index.php?status=1\">";
-                                                                        } else {
-                                                                            echo '<div class="col-md-12 btn btn-danger text-white">
-                                                                        <h6 class="mt-2">Error!</h6>
-                                                                        </div>';
-                                                                            echo "<meta http-equiv=\"refresh\" content=\"0; url=./index.php\">";
-                                                                        }
-                                                                    } else {
-                                                                        echo '<div class="col-md-12 btn btn-danger text-white">
-                                                                        <h6 class="mt-2">Ticket For This User Already Exists!</h6>
-                                                                        </div>';
-                                                                        echo "<meta http-equiv=\"refresh\" content=\"2; url=./index.php\">";
-                                                                    }
-                                                                }
-                                                                ?>
-                                                                <div class="row">
-                                                                    <form action="./index.php" class="forms-sample mt-2 row" method="post">
+                                                                    <div id="notification"></div>
+                                                                    <div class="row">
                                                                         <div class="form-group col-md-4">
                                                                             <label for="username">Username</label>
-                                                                            <input type="hidden" name="ticket_code" id="ticket_code" value="<?= rand(); ?>">
+                                                                            <input type="hidden" name="client_code" id="client_code" value="<?= rand(); ?>">
                                                                             <input list="username" class="form-control form-control-lg col-md-4" id="username" onchange="getUsername(this.value)" name="username" placeholder="Username">
                                                                             <datalist id="username">
                                                                                 <?php
@@ -178,9 +137,8 @@ if (isset($_SESSION['email'])) {
                                                                                     $product_id = $row['product_id'];
                                                                                     $product_name = $row['product_name'];
                                                                                     $product_price = $row['product_price'];
-                                                                                    @++$i;
                                                                                     echo '
-                                                                                    <option value="' . $product_price . '">' . $product_name . '</option>
+                                                                                    <option value="' . $product_id . '">' . $product_name . '/' . $product_price . '</option>
                                                                                     ';
                                                                                 }
                                                                                 ?>
@@ -196,85 +154,85 @@ if (isset($_SESSION['email'])) {
                                                                         </div>
                                                                         <div id="product_demo"></div>
                                                                         <div class="form-group">
-                                                                            <input type="submit" name="create_user" class="btn-lg btn btn-primary me-2 text-white col-md-12">
+                                                                            <input type="submit" name="create_user" onclick="onSubmitButton()" class="btn-lg btn btn-primary me-2 text-white col-md-12">
                                                                             <input type="reset" value="Cancel" class="btn-lg btn btn-outline-danger col-md-12">
                                                                         </div>
-                                                                    </form>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
 
-                                            <div class="col-lg-5 d-flex flex-column">
-                                                <div class="row flex-grow">
-                                                    <div id="ticket" class="col-12 col-lg-12 col-lg-12 grid-margin stretch-card">
-                                                        <div class="card">
-                                                            <div class="card-body mx-4">
-                                                                <div class="container">
-                                                                    <?php
-                                                                    $fetch_ticket = mysqli_query($conn, "SELECT * FROM ticket");
-                                                                    while ($row = mysqli_fetch_array($fetch_ticket)) {
-                                                                    }
-                                                                    ?>
-                                                                    <div class="row">
-                                                                        <ul class="list-unstyled row">
-                                                                            <li class="text-muted mt-1 col-md-6"><span class="text-black">Invoice</span> #<z id="bill_invoice"></z>
-                                                                            </li>
-                                                                            <li id="bill_username" class="text-black col-md-6">Username</li>
-                                                                            <li id="bill_email" class="text-black col-md-6">Email</li>
-                                                                            <li id="bill_mobile" class="text-black col-md-6">Mobile</li>
-                                                                            <li id="bill_date" class="text-black mt-1 col-md-6">Date</li>
-                                                                        </ul>
-                                                                        <hr>
-                                                                        <div class="col-xl-10">
-                                                                            <p id="package_name">Package Name</p>
-                                                                        </div>
-                                                                        <div class="col-xl-2">
-                                                                            <p class="float-end">₹ <z id="package_price">00.00</z>
-                                                                            </p>
-                                                                        </div>
-                                                                        <hr>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-xl-10">
-                                                                            <p>Quantity</p>
-                                                                        </div>
-                                                                        <div class="col-xl-2">
-                                                                            <p class="float-end" id="bill_quantity">00
-                                                                            </p>
-                                                                        </div>
-                                                                        <hr>
-                                                                    </div>
-                                                                    <div id="bill_prod" class="row"></div>
-                                                                    <div class="row">
-                                                                        <div class="col-xl-10">
-                                                                            <p>Products Total</p>
-                                                                        </div>
-                                                                        <div class="col-xl-2">
-                                                                            <p class="float-end" id="product_total"></p>
-                                                                        </div>
-                                                                        <hr style="border: 2px solid black;">
-                                                                        <div class="row text-black">
-                                                                            <div class="col-xl-12">
-                                                                                <p class="float-end fw-bold">Total: ₹<z id="bill_total">00.00</z>
+                                                <div class="col-lg-5 d-flex flex-column">
+                                                    <div class="row flex-grow">
+                                                        <div id="ticket" class="col-12 col-lg-12 col-lg-12 grid-margin stretch-card">
+                                                            <div class="card">
+                                                                <div class="card-body mx-4">
+                                                                    <div class="container">
+                                                                        <?php
+                                                                        $fetch_ticket = mysqli_query($conn, "SELECT * FROM ticket");
+                                                                        while ($row = mysqli_fetch_array($fetch_ticket)) {
+                                                                        }
+                                                                        ?>
+                                                                        <div class="row">
+                                                                            <ul class="list-unstyled row">
+                                                                                <li class="text-muted mt-1 col-md-6"><span class="text-black">Invoice</span> #<z id="bill_invoice"></z>
+                                                                                </li>
+                                                                                <li id="bill_username" class="text-black col-md-6">Username</li>
+                                                                                <li id="bill_email" class="text-black col-md-6">Email</li>
+                                                                                <li id="bill_mobile" class="text-black col-md-6">Mobile</li>
+                                                                                <li id="bill_date" class="text-black mt-1 col-md-6">Date</li>
+                                                                            </ul>
+                                                                            <hr>
+                                                                            <div class="col-xl-10">
+                                                                                <p id="package_name">Package Name</p>
+                                                                            </div>
+                                                                            <div class="col-xl-2">
+                                                                                <p class="float-end">₹ <z id="package_price">00.00</z>
                                                                                 </p>
                                                                             </div>
+                                                                            <hr>
                                                                         </div>
-                                                                        <hr style="border: 2px solid black;">
+                                                                        <div class="row">
+                                                                            <div class="col-xl-10">
+                                                                                <p>Quantity</p>
+                                                                            </div>
+                                                                            <div class="col-xl-2">
+                                                                                <p class="float-end" id="bill_quantity">00
+                                                                                </p>
+                                                                            </div>
+                                                                            <hr>
+                                                                        </div>
+                                                                        <div id="bill_prod" class="row"></div>
+                                                                        <div class="row">
+                                                                            <div class="col-xl-10">
+                                                                                <p>Products Total</p>
+                                                                            </div>
+                                                                            <div class="col-xl-2">
+                                                                                <p class="float-end" id="product_total"></p>
+                                                                            </div>
+                                                                            <hr style="border: 2px solid black;">
+                                                                            <div class="row text-black">
+                                                                                <div class="col-xl-12">
+                                                                                    <p class="float-end fw-bold">Total: ₹<z id="bill_total">00.00</z>
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr style="border: 2px solid black;">
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <button onclick="printDiv('ticket')" class="btn btn-info">Print</button>
+                                                        <div class="row">
+                                                            <button onclick="printDiv('ticket')" class="btn btn-info">Print</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
@@ -291,10 +249,8 @@ if (isset($_SESSION['email'])) {
                             console.log(product_total.length)
                             if (product_total.length > 0) {
                                 var new_product_price = parseInt(product_total);
-                                console.log(new_product_price)
                                 total = package_price * quantity;
                                 total = total + new_product_price;
-                                console.log(total)
                             } else {
                                 var total = package_price * quantity;
                             }
@@ -309,12 +265,14 @@ if (isset($_SESSION['email'])) {
                             document.getElementById('product_total').innerHTML = '';
                         }
 
+                        let numberValue = 0;
+                        const myObj = [];
+
                         function addToCart() {
                             var product_name = document.getElementById('product_name');
                             var product_quantity = document.getElementById('product_quantity').value;
-                            var product_price = product_name.value;
-                            var product_name = product_name.options[product_name.selectedIndex].text;
-                            document.getElementById('bill_prod').innerHTML += '<div class="col-xl-10" id="delete"><p>' + product_name + '</p></div><div id="delete" class="col-xl-2"><p class="float-end">X' + product_quantity + '</p></div>';
+                            var [product_name, product_price] = product_name.options[product_name.selectedIndex].text.split('/');
+                            document.getElementById('bill_prod').innerHTML += '<div class="col-xl-10" id="delete"><p id="arrText">' + product_name + '</p></div><div id="delete" class="col-xl-2"><p class="float-end" id="arrVal">X' + product_quantity + '</p></div>';
                             var sum = product_quantity * product_price;
                             const myPara = document.getElementById("product_total");
                             if (myPara.innerHTML.length > 0) {
@@ -326,6 +284,39 @@ if (isset($_SESSION['email'])) {
                             var str = document.getElementById('bill_quantity').innerHTML;
 
                             billTotal(str);
+
+                            var product_id = document.getElementById('product_name').value;
+                            myObj[product_id] = product_quantity + "," + product_name;
+                            var new_obj = myObj.join(",")
+                            console.log(new_obj);
+
+                        }
+
+                        function onSubmitButton() {
+                            var client_code = document.getElementById('client_code').value;
+                            var username = document.getElementById('username').value;
+                            var email = document.getElementById('email').value;
+                            var mobile = document.getElementById('mobile').value;
+                            var ticket_types = document.getElementById('ticket_types').value;
+                            var quantity = document.getElementById('product_quantity').value;
+                            var date = document.getElementById('date').value;
+
+
+                            // Create a new XMLHttpRequest object
+                            const xhr = new XMLHttpRequest();
+
+                            // Define the AJAX request
+                            xhr.open("GET", "./helpers/process.php?username=" + username + "&&email=" + email + "&&phone=" + mobile + "&&client_code=" + client_code + "&&quantity=" + quantity + "&&product=" + myObj + "&&ticket_check_in_date=" + date);
+                            xhr.onreadystatechange = function() {
+                                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                                    const response = xhr.responseText;
+                                    document.getElementById('notification').innerHTML = response;
+                                    console.log(response);
+                                    // Do something with the response data
+                                }
+                            }
+                            // Send the AJAX request with the data
+                            xhr.send();
                         }
 
                         function printDiv(divName) {
@@ -345,7 +336,7 @@ if (isset($_SESSION['email'])) {
                         }
 
                         window.onload = function getInvoice() {
-                            var invoice = document.getElementById('ticket_code').value;
+                            var invoice = document.getElementById('client_code').value;
                             document.getElementById('bill_invoice').innerHTML = invoice;
                         }
 
