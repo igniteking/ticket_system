@@ -78,7 +78,7 @@
                                                                                 <td>' . $ticket_check_in_date . '</td>
                                                                                 <td><label class="badge badge-danger">' . $created_at . '</label></td>
                                                                                 <td>'; ?>
-                                                                                <button type="submit" class="btn btn-outline-primary">Edit Ticket</button>
+                                                                                <a href="./print.php?ticket_code=<?= $ticket_code ?>"><button class="btn btn-outline-primary">Print Ticket</button></a>
                                                                                 <button type="submit" class="btn btn-outline-danger" onclick="doConfirm(<?php echo $ticket_code; ?>);">Delete Ticket</button>
                                                                         <?php echo '
                                                                                 </td>
