@@ -26,13 +26,13 @@
                                                         <div class="card-body">
                                                             <h4 class="card-title">Admin List</h4>
                                                             <div class="row">
-                                                                <form action="./admin_list.php" method="get">
+                                                                <form action="./food_stall_list.php" method="get">
                                                                     <div class="form-group row">
                                                                         <div class="col-sm-9">
-                                                                            <input type="text" name="admin_name" class="form-control" placeholder="Search Admin Name" onblur="this.form.submit()" id="client_name">
+                                                                            <input type="text" name="food_stall_name" class="form-control" placeholder="Search Food Stall Name" onblur="this.form.submit()" id="food_stall_name">
                                                                         </div>
                                                                         <div class="col-sm-3">
-                                                                            <a href="./admin_list.php" class="btn btn-outline-danger col-md-12">Reset</a>
+                                                                            <a href="./food_stall_list.php" class="btn btn-outline-danger col-md-12">Reset</a>
                                                                         </div>
                                                                 </form>
                                                             </div>

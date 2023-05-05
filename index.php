@@ -34,28 +34,128 @@ if (isset($_SESSION['email'])) {
                                                         <h3 class="rate-percentage"><?php echo mysqli_num_rows((mysqli_query($conn, "SELECT * FROM `user_data` WHERE `user_type` = 'admin'"))); ?></h3>
                                                     </div>
                                                     <div>
+                                                        <p class="statistics-title">Total Food Stalls</p>
+                                                        <h3 class="rate-percentage"><?php echo mysqli_num_rows((mysqli_query($conn, "SELECT * FROM `user_data` WHERE `user_type` = 'food_stall'"))); ?></h3>
+                                                    </div>
+                                                    <div>
                                                         <p class="statistics-title">Total Tickets</p>
                                                         <h3 class="rate-percentage"><?php echo mysqli_num_rows((mysqli_query($conn, "SELECT * FROM `ticket`"))); ?></h3>
-                                                        <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>68.8</span></p>
                                                     </div>
                                                     <div>
                                                         <p class="statistics-title">Total Users</p>
                                                         <h3 class="rate-percentage"><?php echo mysqli_num_rows((mysqli_query($conn, "SELECT * FROM `client`"))); ?></h3>
-                                                        <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>68.8</span></p>
                                                     </div>
                                                     <div class="d-none d-md-block">
                                                         <p class="statistics-title">Total Products</p>
                                                         <h3 class="rate-percentage"><?php echo mysqli_num_rows((mysqli_query($conn, "SELECT * FROM `product`"))); ?></h3>
-                                                        <p class="text-success d-flex"><i class="mdi mdi-menu-down"></i><span>+0.8%</span></p>
+                                                    </div>
+                                                    <div class="d-none d-md-block">
+                                                        <p class="statistics-title">Total Category</p>
+                                                        <h3 class="rate-percentage"><?php echo mysqli_num_rows((mysqli_query($conn, "SELECT * FROM `category`"))); ?></h3>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <?php
                                         if ($user_type == 'food_stall') { ?>
-
+                                            <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
+                                                <div class="row">
+                                                    <div class="card-body">
+                                                        <div class="col-lg-12 grid-margin stretch-card">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <h4 class="card-title">Ticket List (Food)</h4>
+                                                                    <div class="row">
+                                                                        <form action="./index.php" method="get">
+                                                                            <div class="form-group row">
+                                                                                <div class="col-sm-9">
+                                                                                    <input type="text" name="ticket_code" class="form-control" placeholder="Search Ticket Code" onblur="this.form.submit()" id="ticket_code">
+                                                                                </div>
+                                                                                <div class="col-sm-3">
+                                                                                    <a href="./index.php" class="btn btn-outline-danger col-md-12">Reset</a>
+                                                                                </div>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div id="notification"></div>
+                                                                    <div class="table-responsive">
+                                                                        <table class="table">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Ticket Code</th>
+                                                                                    <th>Username</th>
+                                                                                    <th>Email</th>
+                                                                                    <th>Quantity / Food Item</th>
+                                                                                    <th>Action(s)</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <?php
+                                                                                $ticket_code = @$_GET['ticket_code'];
+                                                                                if ($ticket_code) {
+                                                                                    $get_client = mysqli_query($conn, "SELECT * FROM ticket WHERE ticket_code LIKE '%$ticket_code%'");
+                                                                                    $count = mysqli_num_rows($get_client);
+                                                                                } else {
+                                                                                    $get_client = mysqli_query($conn, "SELECT * FROM ticket ORDER BY created_at ASC LIMIT 20");
+                                                                                    $count = mysqli_num_rows($get_client);
+                                                                                }
+                                                                                while ($row = mysqli_fetch_array($get_client)) {
+                                                                                    $ticket_code = $row['ticket_code'];
+                                                                                    $ticket_username = $row['ticket_username'];
+                                                                                    $ticket_user_email = $row['ticket_user_email'];
+                                                                                    $ticket_quantity = $row['ticket_quantity'];
+                                                                                    $product_id = $row['product_id'];
+                                                                                    $product_status = $row['product_status'];
+                                                                                    $explode = explode(',', $product_id);
+                                                                                    $created_at = $row['created_at'];
+                                                                                    if ($count = 0) {
+                                                                                        echo 'No user Found!';
+                                                                                    } else {
+                                                                                        echo '<tr>
+                                                                                <td>' . $ticket_code . '</td>
+                                                                                <td>' . $ticket_username . '</td>
+                                                                                <td>' . $ticket_user_email . '</td>
+                                                                                <td><h1 class="display-5">';
+                                                                                        foreach ($explode as $key => $value) {
+                                                                                            if (@$i % 2 == 0) {
+                                                                                                echo $value . " " . "<br>";
+                                                                                            } else {
+                                                                                                echo $value . "x ";
+                                                                                            }
+                                                                                            @$i++;
+                                                                                        }
+                                                                                        echo '</h1></td>
+                                                                                <td>'; ?>
+                                                                                        <form action="./index.php" method="GET">
+                                                                                            <select class="form-control-lg form-control" name="status" id="status" onchange="this.form.submit();">
+                                                                                                <option value="<?= $product_status ?>"><?= $product_status ?></option>
+                                                                                                <option value="completed">Completed</option>
+                                                                                            </select>
+                                                                                            <input type="hidden" name="ticket_code" value="<?= $ticket_code ?>">
+                                                                                        </form>
+                                                                                <?php echo '
+                                                                                </td>
+                                                                                </tr>';
+                                                                                    }
+                                                                                }
+                                                                                if (@$_GET['status'] and @$_GET['ticket_code']) {
+                                                                                    $status = $_GET['status'];
+                                                                                    $ticket_code = $_GET['ticket_code'];
+                                                                                    $update = mysqli_query($conn, "UPDATE `ticket` SET `product_status`='$status' WHERE ticket_code = '$ticket_code'");
+                                                                                    if ($update) {
+                                                                                        echo "<meta http-equiv=\"refresh\" content=\"0; url=./index.php\">";
+                                                                                    }
+                                                                                }
+                                                                                ?>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         <?php } else { ?>
-
                                             <div class="row">
                                                 <div class="col-lg-7 d-flex flex-column">
                                                     <div class="row flex-grow">
@@ -243,7 +343,7 @@ if (isset($_SESSION['email'])) {
                             if (str.length > 0) {
                                 var quantity = str;
                             }
-                            document.getElementById('bill_quantity').innerHTML = quantity;
+                            document.getElementById('bill_quantity').innerHTML = quantity;    
                             var package_price = document.getElementById('package_price').innerHTML;
                             var product_total = document.getElementById('product_total').innerHTML;
                             console.log(product_total.length)

@@ -70,12 +70,5 @@ include('./connections/global.php');
         <span class="menu-title">View Category</span>
       </a>
     </li>
-    <li class="nav-item nav-category">Settings</li>
-    <li class="nav-item">
-      <a class="nav-link" href="./profile.php">
-        <i class="menu-icon mdi mdi-account-circle-outline"></i>
-        <span class="menu-title">Profile</span>
-      </a>
-    </li>
   </ul>
 </nav>
