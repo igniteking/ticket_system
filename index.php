@@ -271,6 +271,10 @@ if (isset($_SESSION['email'])) {
                                                             <div class="card">
                                                                 <div class="card-body mx-4">
                                                                     <div class="container">
+                                                                        <center>
+                                                                            <h4><b>Surya Funcity Limited</b></h4>
+                                                                        </center>
+                                                                        <h6 class="text-center">Vill Dafarpur, Chandigarh - Barwala Highway,<br> Distt SAS Nagar Mohali, Punjab - 140201</h6><br><br>
                                                                         <?php
                                                                         $fetch_ticket = mysqli_query($conn, "SELECT * FROM ticket");
                                                                         while ($row = mysqli_fetch_array($fetch_ticket)) {
@@ -278,12 +282,14 @@ if (isset($_SESSION['email'])) {
                                                                         ?>
                                                                         <div class="row">
                                                                             <ul class="list-unstyled row">
-                                                                                <li class="text-muted mt-1 col-md-6"><span class="text-black">Invoice</span> #<z id="bill_invoice"></z>
+                                                                                <hr>
+                                                                                <li id="bill_username" class="text-black col-md-6">Username</li><br><br>
+                                                                                <hr>
+                                                                                <li id="bill_date" class="text-black mt-1 col-md-6">Date</li>
                                                                                 </li>
-                                                                                <li id="bill_username" class="text-black col-md-6">Username</li>
+                                                                                <li class="text-muted mt-1 col-md-6"><span class="text-black">Invoice</span> #<z id="bill_invoice"></z>
                                                                                 <li id="bill_email" class="text-black col-md-6">Email</li>
                                                                                 <li id="bill_mobile" class="text-black col-md-6">Mobile</li>
-                                                                                <li id="bill_date" class="text-black mt-1 col-md-6">Date</li>
                                                                             </ul>
                                                                             <hr>
                                                                             <div class="col-xl-10">
@@ -321,6 +327,10 @@ if (isset($_SESSION['email'])) {
                                                                                 </div>
                                                                             </div>
                                                                             <hr style="border: 2px solid black;">
+                                                                            <center>
+                                                                                <h4>Thankyou</h4>
+                                                                            </center>
+                                                                            <h6 class="text-center text-muted">GST NO: 03AACCS2999FIZA <br> Bank Details: <br> Bank of India AC NO: 620225100001187 <br> Bank Of India, Sector 32, Chandigarh</h6><br><br>
                                                                         </div>
                                                                     </div>
                                                                 </div>
