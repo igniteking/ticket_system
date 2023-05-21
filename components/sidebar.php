@@ -18,6 +18,12 @@ include('./connections/global.php');
           </a>
         </li>
         <li class="nav-item">
+          <a href="layout.php" class="nav-link">
+            <i class="menu-icon mdi mdi-floor-plan"></i>
+            <span class="menu-title">Reports</span>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="admin_list.php" class="nav-link">
             <i class="menu-icon mdi mdi-floor-plan"></i>
             <span class="menu-title">View Admin</span>
@@ -43,6 +49,13 @@ include('./connections/global.php');
       <a href="ticket_list.php" class="nav-link">
         <i class="menu-icon mdi mdi-floor-plan"></i>
         <span class="menu-title">Ticket</span>
+      </a>
+    </li>
+    <li class="nav-item nav-category">WooCommerce Order</li>
+    <li class="nav-item">
+      <a href="./wocom_order.php" class="nav-link">
+        <i class="menu-icon mdi mdi-floor-plan"></i>
+        <span class="menu-title">Order List</span>
       </a>
     </li>
     <li class="nav-item nav-category">Product</li>

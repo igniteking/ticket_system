@@ -3,7 +3,6 @@
  <!-- endinject -->
  <!-- Plugin js for this page -->
  <script src="./assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
- <script src="./assets/vendors/progressbar.js/progressbar.min.js"></script>
 
  <!-- End plugin js for this page -->
  <!-- inject:js -->
@@ -14,11 +13,10 @@
  <!-- endinject -->
  <!-- Custom js for this page-->
  <script src="./assets/js/jquery.cookie.js" type="text/javascript"></script>
- <script src="./assets/js/dashboard.js"></script>
- <script src="./assets/js/Chart.roundedBarCharts.js"></script>
  <!-- End custom js for this page-->
  <script src="./assets/vendors/select2/select2.min.js"></script>
  <script src="./assets/js/select2.js"></script>
+
 
  </body>
 

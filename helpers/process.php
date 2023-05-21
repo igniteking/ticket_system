@@ -5,10 +5,11 @@ $post_email = $_GET['email'];
 $post_phone = $_GET['phone'];
 $client_code = $_GET['client_code'];
 $quantity = $_GET['quantity'];
+$ticket_types = $_GET['ticket_types'];
 $product = array($_GET['product']);
 ($array = implode(",", $product));
 $ticket_check_in_date = $_GET['ticket_check_in_date'];
-$created_at = date('Y-m-d H:i:s');
+$created_at = date('Y-m-d');
 
 // // $product = $_GET['product_name'];
 // $N = count($product);
@@ -19,7 +20,7 @@ if ($check_ticket <= 0) {
     if ($check_user <= 0) {
         $create_user = mysqli_query($conn, "INSERT INTO `client`(`client_code`, `username`, `email`, `phone`, `created_at`) VALUES ('$client_code', '$post_username','$post_email','$post_phone','$created_at')");
     }
-    $create_ticket = mysqli_query($conn, "INSERT INTO `ticket`(`ticket_code`, `ticket_username`, `ticket_user_email`, `ticket_quantity`,`ticket_check_in_date`, `product_id`, `product_status`, `created_at`) VALUES ('$client_code','$post_username','$post_email','$quantity', '$ticket_check_in_date', '$array','pending', '$created_at')");
+    $create_ticket = mysqli_query($conn, "INSERT INTO `ticket`(`ticket_code`, `ticket_username`, `ticket_user_email`, `ticket_quantity`, `ticket_name`, `ticket_check_in_date`, `product_id`, `product_status`, `created_at`) VALUES ('$client_code','$post_username','$post_email','$quantity', '$ticket_types', '$ticket_check_in_date', '$array','pending', '$created_at')");
     if ($create_ticket) {
         echo '<div class="col-md-12 btn btn-success text-white">
             <h6 class="mt-2">Ceated Successfully!</h6>

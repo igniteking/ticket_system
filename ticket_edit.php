@@ -26,36 +26,6 @@ if (isset($_SESSION['email'])) {
                             <div class="home-tab">
                                 <div class="tab-content tab-content-basic">
                                     <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="statistics-details d-flex align-items-center justify-content-between">
-                                                    <div>
-                                                        <p class="statistics-title">Total Admin</p>
-                                                        <h3 class="rate-percentage"><?php echo mysqli_num_rows((mysqli_query($conn, "SELECT * FROM `user_data` WHERE `user_type` = 'admin'"))); ?></h3>
-                                                    </div>
-                                                    <div>
-                                                        <p class="statistics-title">Total Food Stalls</p>
-                                                        <h3 class="rate-percentage"><?php echo mysqli_num_rows((mysqli_query($conn, "SELECT * FROM `user_data` WHERE `user_type` = 'food_stall'"))); ?></h3>
-                                                    </div>
-                                                    <div>
-                                                        <p class="statistics-title">Total Tickets</p>
-                                                        <h3 class="rate-percentage"><?php echo mysqli_num_rows((mysqli_query($conn, "SELECT * FROM `ticket`"))); ?></h3>
-                                                    </div>
-                                                    <div>
-                                                        <p class="statistics-title">Total Users</p>
-                                                        <h3 class="rate-percentage"><?php echo mysqli_num_rows((mysqli_query($conn, "SELECT * FROM `client`"))); ?></h3>
-                                                    </div>
-                                                    <div class="d-none d-md-block">
-                                                        <p class="statistics-title">Total Products</p>
-                                                        <h3 class="rate-percentage"><?php echo mysqli_num_rows((mysqli_query($conn, "SELECT * FROM `product`"))); ?></h3>
-                                                    </div>
-                                                    <div class="d-none d-md-block">
-                                                        <p class="statistics-title">Total Category</p>
-                                                        <h3 class="rate-percentage"><?php echo mysqli_num_rows((mysqli_query($conn, "SELECT * FROM `category`"))); ?></h3>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <?php
                                         if ($user_type == 'food_stall') { ?>
                                             <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
@@ -169,6 +139,13 @@ if (isset($_SESSION['email'])) {
                                                                     </div>
                                                                     <div id="notification"></div>
                                                                     <div class="row">
+                                                                        <?php
+                                                                        $ticket_code_get = $_GET['ticket_code'];
+                                                                        $fetch_ticket_data = mysqli_query($conn, "SELECT * FROM ticket WHERE ticket_code = '$ticket_code_get'");
+                                                                        while($rows = mysqli_fetch_array($fetch_ticket_data)){
+                                                                            $username_get = $_GET['username'];
+                                                                        }
+                                                                        ?>
                                                                         <div class="form-group col-md-4">
                                                                             <label for="username">Username</label>
                                                                             <input type="hidden" name="client_code" id="client_code" value="<?= rand(); ?>">
@@ -406,7 +383,7 @@ if (isset($_SESSION['email'])) {
                             const xhr = new XMLHttpRequest();
 
                             // Define the AJAX request
-                            xhr.open("GET", "./helpers/process.php?username=" + username + "&&ticket_types=" + ticket_types + "&&email=" + email + "&&phone=" + mobile + "&&client_code=" + client_code + "&&quantity=" + quantity + "&&product=" + myObj + "&&ticket_check_in_date=" + date);
+                            xhr.open("GET", "./helpers/process.php?username=" + username + "&&email=" + email + "&&phone=" + mobile + "&&client_code=" + client_code + "&&quantity=" + quantity + "&&product=" + myObj + "&&ticket_check_in_date=" + date);
                             xhr.onreadystatechange = function() {
                                 if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                                     const response = xhr.responseText;
