@@ -293,14 +293,10 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <label for="payment_method">Payment Method</label>
-                                                                <select class="form-control form-control-lg col-md-4" id="payment_method" name="payment_method">
+                                                                <select class="form-control form-control-lg col-md-4" id="payment_method" onchange="getUsername(this.value)" name="payment_method">
                                                                     <option value="Cash">Cash</option>
                                                                     <option value="Card">Card</option>
                                                                     <option value="UPI">UPI</option>
-                                                                    <option value="NEFT">NEFT</option>
-                                                                    <option value="Due">Due</option>
-                                                                    <option value="RTGS">RTGS</option>
-                                                                    <option value="IMPS">IMPS</option>
                                                                     <option value="Other">Other</option>
                                                                 </select>
                                                             </div>
@@ -551,18 +547,16 @@
                     var username = document.getElementById('username').value;
                     var email = document.getElementById('email').value;
                     var mobile = document.getElementById('mobile').value;
-                    var ticket_types = document.getElementById('package_name').innerHTML;
+                    var ticket_types = document.getElementById('ticket_types').value;
                     var quantity = document.getElementById('product_quantity').value;
                     var date = document.getElementById('date').value;
-                    var discount = document.getElementById('discount').value;
-                    var payment_method = document.getElementById('payment_method').value;
 
 
                     // Create a new XMLHttpRequest object
                     const xhr = new XMLHttpRequest();
 
                     // Define the AJAX request
-                    xhr.open("GET", "./helpers/process.php?username=" + username + "&&payment_method=" + payment_method + "&&discount=" + discount + "&&ticket_types=" + ticket_types + "&&email=" + email + "&&phone=" + mobile + "&&client_code=" + client_code + "&&quantity=" + quantity + "&&product=" + myObj + "&&ticket_check_in_date=" + date);
+                    xhr.open("GET", "./helpers/process.php?username=" + username + "&&ticket_types=" + ticket_types + "&&email=" + email + "&&phone=" + mobile + "&&client_code=" + client_code + "&&quantity=" + quantity + "&&product=" + myObj + "&&ticket_check_in_date=" + date);
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                             const response = xhr.responseText;
