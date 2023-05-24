@@ -2,6 +2,13 @@
 <?php include('./connections/global.php'); ?>
 <?php include('./connections/functions.php'); ?>
 <?php include('./components/header.php'); ?>
+<?php
+if (isset($_SESSION['email'])) {
+} else {
+    echo "<meta http-equiv=\"refresh\" content=\"0; url=./helpers/logout.php\">";
+    exit();
+}
+?>
 
 <body>
     <div class="container-scroller">
@@ -194,7 +201,7 @@
                             </div>
                         </div>
                         <div class="row mt-3">
-                            <div class="col-md-6" id="mainbox" style="display: block;">
+                            <div class="col-md-6" id="mainbox" style="display: none;">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="d-sm-flex justify-content-between align-items-start">
@@ -352,7 +359,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6" id="mainbox2" style="display: block;">
+                            <div class="col-lg-6" id="mainbox2" style="display: none;">
                                 <div class="row flex-grow">
                                     <div id="ticket" class="col-12 col-lg-12 col-lg-12 grid-margin stretch-card">
                                         <div class="card">
@@ -469,6 +476,7 @@
                     }
                     if (product_total.length > 0) {
                         var new_product_price = parseInt(product_total);
+                        console.log(new_product_price)
                         var ticket_product_price = package_price * quantity;
                         console.log(ticket_product_price);
 
@@ -484,13 +492,13 @@
 
                         // addming price of products
                         totalValue = new_product_price + totalValue;
-
+                        totalValue = Math.round(totalValue)
+                        gstAmount = Math.round(gstAmount)
                         document.getElementById('sgst_amount').innerHTML = gstAmount;
                         document.getElementById('cgst_amount').innerHTML = gstAmount;
                         document.getElementById('bill_total').innerHTML = totalValue;
 
                     } else {
-
                         var total = package_price * quantity;
 
                         // GST rate (in decimal form)
@@ -502,6 +510,9 @@
 
                         // Calculate total value including GST
                         var totalValue = total + newAmount;
+
+                        totalValue = Math.round(totalValue)
+                        gstAmount = Math.round(gstAmount)
 
                         document.getElementById('sgst_amount').innerHTML = gstAmount;
                         document.getElementById('cgst_amount').innerHTML = gstAmount;
@@ -621,15 +632,15 @@
                         }
 
                         if (selectedTicket == "AMUSEMENT PARK") {
-                            price = "600.00";
+                            price = "508.47";
                         } else if (selectedTicket == "WUNDER WATER") {
-                            price = "1250.00";
+                            price = "1059.32";
                         } else if (selectedTicket == "COMBO – AMUSEMENT PARK + WATER PARK") {
-                            price = "1300.00";
+                            price = "1101.69";
                         } else if (selectedTicket == "Yearly Membership – Couple") {
-                            price = "5990.00";
+                            price = "5076.27";
                         } else if (selectedTicket == "Yearly Membership – Family") {
-                            price = "10990.00";
+                            price = "9313.56";
                         }
                     }
 

@@ -23,6 +23,6 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="./assets/css/vertical-layout-light/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="./assets/images/favicon.png" />
+  <link rel="shortcut icon" href="./assets/images/logo.svg" />
 
 </head>
