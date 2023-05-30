@@ -66,6 +66,7 @@
                                                                             $ticket_user_email = $row['ticket_user_email'];
                                                                             $ticket_quantity = $row['ticket_quantity'];
                                                                             $ticket_check_in_date = $row['ticket_check_in_date'];
+                                                                            $cancel_ticekt = $row['cancel_ticket'];
                                                                             $created_at = $row['created_at'];
                                                                             if ($count = 0) {
                                                                                 echo 'No user Found!';
@@ -77,11 +78,19 @@
                                                                                 <td>' . $ticket_quantity . '</td>
                                                                                 <td>' . $ticket_check_in_date . '</td>
                                                                                 <td><label class="badge badge-danger">' . $created_at . '</label></td>
-                                                                                <td>'; ?>
-                                                                                <a href="./print.php?ticket_code=<?= $ticket_code ?>"><button class="btn btn-outline-primary">Print Ticket</button></a>
-                                                                                <a href="./ticket_edit.php?ticket_code=<?= $ticket_code ?>"><button class="btn btn-outline-info">Edit Ticket</button></a>
-                                                                                <button type="submit" class="btn btn-outline-danger" onclick="doConfirm(<?php echo $ticket_code; ?>);">Delete Ticket</button>
-                                                                        <?php echo '
+                                                                                <td>';
+                                                                                if ($cancel_ticekt == 1) {
+                                                                                    echo "<p>Ticket Canceled!</p>";
+                                                                                } else { ?>
+                                                                                    <a href="./invoice.php?ticket_code=<?= $ticket_code ?>"><button class="btn btn-outline-primary">Print Ticket</button></a>
+                                                                                    <button class="btn btn-outline-danger" onclick="CancelTicket(<?= $ticket_code ?>)">Cancel Ticket</button></a>
+                                                                                <?php
+                                                                                }
+                                                                                if ($user_type == 'superadmin') {
+                                                                                ?>
+                                                                                    <button type="submit" class="btn btn-outline-danger" onclick="doConfirm(<?php echo $ticket_code; ?>);">Delete Ticket</button>
+                                                                        <?php }
+                                                                                echo '
                                                                                 </td>
                                                                                 </tr>';
                                                                             }
@@ -90,6 +99,23 @@
                                                                     </tbody>
                                                                 </table>
                                                                 <script>
+                                                                    function CancelTicket(code) {
+                                                                        var ok = confirm("Are you sure to Cancel the Ticket?")
+                                                                        if (ok) {
+
+                                                                            var xmlhttp = new XMLHttpRequest();
+                                                                            xmlhttp.onreadystatechange = function() {
+                                                                                if (this.readyState == 4 && this.status == 200) {
+                                                                                    document.getElementById("notification").innerHTML = this.responseText;
+                                                                                }
+                                                                            };
+                                                                            xmlhttp.open("GET", "./helpers/cancel_ticket.php?ticket_code=" + code);
+                                                                            xmlhttp.send();
+                                                                        }
+                                                                    }
+
+
+
                                                                     function doConfirm(code) {
                                                                         var ok = confirm("Are you sure to Delete?")
                                                                         if (ok) {

@@ -26,7 +26,7 @@ include('./connections/global.php');
         <li class="nav-item">
           <a href="admin_list.php" class="nav-link">
             <i class="menu-icon mdi mdi-account-circle"></i>
-            <span class="menu-title">View Admin</span>
+            <span class="menu-title">View Cashier</span>
           </a>
         </li>
         <li class="nav-item">
@@ -34,31 +34,8 @@ include('./connections/global.php');
             <i class="menu-icon mdi mdi-food"></i>
             <span class="menu-title">View Food Stall</span>
           </a>
-        </li>';
-    }
-    ?>
-    <li class="nav-item nav-category">User</li>
-    <li class="nav-item">
-      <a href="clients_list.php" class="nav-link">
-        <i class="menu-icon mdi mdi-account-box"></i>
-        <span class="menu-title">Users</span>
-      </a>
-    </li>
-    <li class="nav-item nav-category">Ticket</li>
-    <li class="nav-item">
-      <a href="ticket_list.php" class="nav-link">
-        <i class="menu-icon mdi mdi-ticket"></i>
-        <span class="menu-title">Ticket</span>
-      </a>
-    </li>
-    <li class="nav-item nav-category">WooCommerce Order</li>
-    <li class="nav-item">
-      <a href="./wocom_order.php" class="nav-link">
-        <i class="menu-icon mdi mdi-border-all"></i>
-        <span class="menu-title">Order List</span>
-      </a>
-    </li>
-    <li class="nav-item nav-category">Product</li>
+        </li>
+        <li class="nav-item nav-category">Product</li>
     <li class="nav-item">
       <a href="./product_add.php" class="nav-link">
         <i class="menu-icon mdi mdi-silverware"></i>
@@ -81,6 +58,29 @@ include('./connections/global.php');
       <a href="./category_list.php" class="nav-link">
         <i class="menu-icon mdi mdi-content-paste"></i>
         <span class="menu-title">View Category</span>
+      </a>
+    </li>';
+    }
+    ?>
+    <li class="nav-item nav-category">User</li>
+    <li class="nav-item">
+      <a href="clients_list.php" class="nav-link">
+        <i class="menu-icon mdi mdi-account-box"></i>
+        <span class="menu-title">Users</span>
+      </a>
+    </li>
+    <li class="nav-item nav-category">Ticket</li>
+    <li class="nav-item">
+      <a href="ticket_list.php" class="nav-link">
+        <i class="menu-icon mdi mdi-ticket"></i>
+        <span class="menu-title">Ticket</span>
+      </a>
+    </li>
+    <li class="nav-item nav-category">WooCommerce Order</li>
+    <li class="nav-item">
+      <a href="./wocom_order.php" class="nav-link">
+        <i class="menu-icon mdi mdi-border-all"></i>
+        <span class="menu-title">Order List</span>
       </a>
     </li>
   </ul>

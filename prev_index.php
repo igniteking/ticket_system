@@ -17,13 +17,12 @@ if (isset($_SESSION['email'])) {
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
             <!-- partial:partials/_sidebar.html -->
-            <?php include('./components/sidebar.php');
-            ?>
+            <?php include('./components/sidebar.php'); ?>
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <div class="card" onclick="changeprice('0')">
                                 <div class="card-body">
                                     <center>
@@ -60,7 +59,7 @@ if (isset($_SESSION['email'])) {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-md-9">
                             <div id="notification"></div>
                             <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add User Details</button>
                             <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal1" data-whatever="@mdo">Add Payment Method</button>
@@ -111,8 +110,6 @@ if (isset($_SESSION['email'])) {
                                                         }
                                                         ?>
                                                     </datalist>
-                                                    <label for="mobile">Check-In Date</label>
-                                                    <input type="date" class="form-control form-control-lg col-md-4" id="date" min="<?php echo date('Y-m-d'); ?>" onchange="getDate(this.value)" name="date">
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -135,9 +132,9 @@ if (isset($_SESSION['email'])) {
                                                     <label for="discount">Discount (INR)</label>
                                                     <input type="number" class="form-control form-control-lg col-md-4" id="discount" name="discount" placeholder="Discount in INR">
                                                 </div>
-                                                <button type="button" onclick=" updatePrice()" class="btn btn-primary">Done</button>
                                             </div>
                                             <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary">Done</button>
                                             </div>
                                         </div>
                                     </div>
@@ -154,26 +151,16 @@ if (isset($_SESSION['email'])) {
                                                 </div>
                                                 <div class="modal-body">
                                                     <label for="payment_method">Payment Method</label>
-                                                    <div class="form-check">
-                                                        <label class="form-check-label" for="radioOption1">
-                                                            Cash
-                                                            <input class="form-check-input" type="radio" name="radioGroup" checked id="radioOption1" value="Cash">
-                                                        </label>
-                                                    </div>
-
-                                                    <div class="form-check">
-                                                        <label class="form-check-label" for="radioOption2">
-                                                            Card
-                                                            <input class="form-check-input" type="radio" name="radioGroup" id="radioOption2" value="Card">
-                                                        </label>
-                                                    </div>
-
-                                                    <div class="form-check">
-                                                        <label class="form-check-label" for="radioOption3">
-                                                            UPI
-                                                            <input class="form-check-input" type="radio" name="radioGroup" id="radioOption3" value="UPI">
-                                                        </label>
-                                                    </div>
+                                                    <select class="form-control form-control-lg col-md-4" id="payment_method" name="payment_method">
+                                                        <option value="Cash">Cash</option>
+                                                        <option value="Card">Card</option>
+                                                        <option value="UPI">UPI</option>
+                                                        <option value="NEFT">NEFT</option>
+                                                        <option value="Due">Due</option>
+                                                        <option value="RTGS">RTGS</option>
+                                                        <option value="IMPS">IMPS</option>
+                                                        <option value="Other">Other</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -275,7 +262,7 @@ if (isset($_SESSION['email'])) {
                                 <center>
                                     <h2>Surya Funcity limited</h2>
                                     <p>
-                                        Vill Daffarpur, Chandigarh - Barwala</br>
+                                        Vill Dafffarpur, Chandigarh - Barwala</br>
                                         Highway, Distt SAS Nagar Mohali,</br>
                                         Punjab - 140201</br>
                                     </p>
@@ -284,8 +271,7 @@ if (isset($_SESSION['email'])) {
                         </center><!--End Invoice Mid-->
                         <hr>
 
-                        <p><label>Name:</label>
-                            <z style="font-size:10px;" id="bill_username"></z>
+                        <p><label>Name:</label> <z style="font-size:10px;" id="bill_username"></z>
                             <hr style="margin-top:-10px;">
                         </p>
 
@@ -356,7 +342,6 @@ if (isset($_SESSION['email'])) {
                                         </td>
                                         <td></td>
                                     </tr>
-
                                     <tr class="tabletitle">
                                         <td>SGST</td>
                                         <td class="Rate">
@@ -378,7 +363,6 @@ if (isset($_SESSION['email'])) {
                                         </td>
                                         <td></td>
                                     </tr>
-
                                     <tr class="tabletitle">
                                         <td>
                                             <h2>Paid Via Other</h2>
@@ -396,7 +380,9 @@ if (isset($_SESSION['email'])) {
 
                             <div id="legalcopy">
                                 <center>
-                                    <p class="legal"><strong>Thank you!</strong> <br>
+
+
+                                    <p class="legal"><strong>Thank you!</strong>  <br>
                                         GST No: 03AACCS299F12A <br>
                                         Bank Details: <br>
                                         Bank Of India <br>
@@ -412,29 +398,13 @@ if (isset($_SESSION['email'])) {
                     </div><!--End Invoice-->
                 </div><!--End Invoice-->
                 <script type="text/javascript">
-                    function updatePrice() {
-                        var elements = document.getElementsByClassName('bill_quantity');
-                        if (elements.length > 0) {
-                            var firstElement = elements[0];
-                            var elementId = firstElement.id;
-                            elementId = elementId.toString();
-                            elementId = elementId.slice(13, 33)
-                            console.log('Element ID:', elementId);
-                        } else {
-                            console.log('No elements found with the class name:', elements);
-                        }
-                        var str = document.getElementById("bill_quantity" + elementId).value;
-                        console.log("str " + str);
-                        console.log("bill_quantity " + elementId)
-                        billTotal(str, elementId)
-                    }
-
                     function changeprice(val) {
                         var price = "";
                         if (document.getElementById('ticket_types').innerText != null) {
                             const package_name = document.querySelectorAll('#ticket_types');
                             // Get the first element using index
                             var selectedTicket = package_name[val].innerText;
+                            console.log(selectedTicket);
 
                             if (selectedTicket == "AMUSEMENT PARK") {
                                 price = "508.47";
@@ -449,17 +419,9 @@ if (isset($_SESSION['email'])) {
                             }
 
                             function addRow() {
-                                var id = Math.random(10);
-                                // document.getElementById('add_item').innerHTML += '<tr id="' + id + '"><td id="package_name">' + selectedTicket + '</td><td><div class="row"><div class="col-md-2 d-flex justify-content-center align-items-center"><button type="button" onclick="add_item(' + id + ')" class="btn btn-inverse-dark btn-md btn-rounded btn-icon"><i class="mdi mdi-plus"></i></button></div><div class="col-md-8 d-flex justify-content-center align-items-center"><input type="number" min="1" value="1" name="bill_quantity" id="bill_quantity' + id + '" onchange="billTotal(this.value, ' + id + ')" class="form-control form-control-lg"></div><div class="col-md-2 d-flex justify-content-center align-items-center"><button type="button" onclick="subtract_item(' + id + ')" class="btn btn-inverse-dark btn-md btn-rounded btn-icon"><i class="mdi mdi-minus"></i></button></div></div></td><td><p class="">₹ <z id="package_price' + id + '">' + price + '</z></p></td><td><p class="">₹ <z id="total_ticket_price' + id + '"></z></p></td><td><button type="button" onclick="remove_item(' + id + ')" class="btn btn-inverse-danger btn-sm btn-rounded btn-icon"><i class="mdi mdi-close"></i></button></td></tr>';
-                                // Create a new element
-                                document.getElementById('new_bill_row').innerHTML += '<tr class="service" id="' + id + '"><td class="tableitem" id="package_name_new"><p class="itemtext">' + selectedTicket + '</p></td><td class="tableitem"><p class="itemtext" id="print_bill_quantity' + id + '"></p></td><td class="tableitem"><p class="itemtext">₹ ' + price + '</p></td><td class="tableitem"><p class="itemtext" id="print_ticket_price' + id + '">₹00.00</p></td></tr>';
-                                var newElement = document.createElement("tr");
-                                var myContainer = document.getElementById('add_item');
-                                newElement.innerHTML = '<td id="package_name">' + selectedTicket + '</td><td><div class="row"><div class="col-md-2 d-flex justify-content-center align-items-center"><button type="button" onclick="add_item(' + id + ')" class="btn btn-inverse-dark btn-md btn-rounded btn-icon"><i class="mdi mdi-plus"></i></button></div><div class="col-md-8 d-flex justify-content-center align-items-center"><input type="number" min="1" value="1" name="bill_quantity" id="bill_quantity' + id + '" onchange="billTotal(this.value, ' + id + ')" class="form-control form-control-lg bill_quantity"></div><div class="col-md-2 d-flex justify-content-center align-items-center"><button type="button" onclick="subtract_item(' + id + ')" class="btn btn-inverse-dark btn-md btn-rounded btn-icon"><i class="mdi mdi-minus"></i></button></div></div></td><td><p class="">₹ <z id="package_price' + id + '">' + price + '</z></p></td><td><p class="">₹ <z id="total_ticket_price' + id + '"></z></p></td><td><button type="button" onclick="remove_item(' + id + ')" class="btn btn-inverse-danger btn-sm btn-rounded btn-icon"><i class="mdi mdi-close"></i></button></td>';
-                                newElement.id = id;
-                                // Append the new element to the container
-                                myContainer.appendChild(newElement);
-                                billTotal(1, id)
+                                var id = Math.random();
+                                document.getElementById('add_item').innerHTML += '<tr id="' + id + '"><td id="package_name">' + selectedTicket + '</td><td><div class="row"><div class="col-md-2 d-flex justify-content-center align-items-center"><button type="button" onclick="add_item(' + id + ')" class="btn btn-inverse-dark btn-md btn-rounded btn-icon"><i class="mdi mdi-plus"></i></button></div><div class="col-md-8 d-flex justify-content-center align-items-center"><input type="number" name="bill_quantity" id="bill_quantity' + id + '" onchange="billTotal(this.value, ' + id + ')" class="form-control form-control-lg"></div><div class="col-md-2 d-flex justify-content-center align-items-center"><button type="button" onclick="subtract_item(' + id + ')" class="btn btn-inverse-dark btn-md btn-rounded btn-icon"><i class="mdi mdi-minus"></i></button></div></div></td><td><p class="">₹ <z id="package_price' + id + '">' + price + '</z></p></td><td><p class="">₹ <z id="total_ticket_price' + id + '"></z></p></td><td><button type="button" onclick="remove_item(' + id + ')" class="btn btn-inverse-danger btn-sm btn-rounded btn-icon"><i class="mdi mdi-close"></i></button></td></tr>';
+                                document.getElementById('new_bill_row').innerHTML += '<tr class="service" id="' + id + '"><td class="tableitem" id="package_name"><p class="itemtext">' + selectedTicket + '</p></td><td class="tableitem"><p class="itemtext" id="print_bill_quantity' + id + '"></p></td><td class="tableitem"><p class="itemtext">₹ ' + price + '</p></td><td class="tableitem"><p class="itemtext" id="print_ticket_price' + id + '">₹00.00</p></td></tr>';
                             }
                         }
                         addRow();
@@ -468,20 +430,20 @@ if (isset($_SESSION['email'])) {
 
 
                     function billTotal(str, id) {
-                        str = str.toString();
-                        var finalvalue = 0;
+                        console.log(str, id);
                         if (str.length > 0) {
                             var quantity = str;
-                            console.log(quantity);
+                            console.log(quantity)
                         }
                         var package_price = document.getElementById('package_price' + id).innerText;
+                        console.log(package_price)
                         var discount = document.getElementById('discount').value;
                         console.log(discount)
                         if (discount.length > 0) {
                             package_price = package_price - discount;
-                            console.log("Discounted price = " + package_price);
                         }
 
+                        console.log(quantity)
                         var total = package_price * quantity;
 
                         // GST rate (in decimal form)
@@ -495,39 +457,23 @@ if (isset($_SESSION['email'])) {
                         var totalValue = total + newAmount;
 
                         totalValue = Math.round(totalValue)
-                        console.log(totalValue);
                         gstAmount = Math.round(gstAmount)
-                        var mathtotal = Math.round(total)
-                        document.getElementById('total_ticket_price' + id).innerText = totalValue;
-                        var add_amount = document.querySelectorAll("[id^='total_ticket_price']");
-                        add_amount.forEach(add_amount => {
-                            finalvalue += parseInt(add_amount.innerText);
-                            console.log("add_amount = " + finalvalue)
-                        });
-
-
                         document.getElementById('sgst_amount').innerHTML = gstAmount;
                         document.getElementById('cgst_amount').innerHTML = gstAmount;
-                        document.getElementById('bill_total').innerHTML = finalvalue;
+                        document.getElementById('bill_total').innerHTML = totalValue;
+                        var mathtotal = Math.round(total)
+                        document.getElementById('total_ticket_price' + id).innerText = mathtotal;
                         document.getElementById('print_ticket_price' + id).innerText = "₹" + mathtotal;
                         document.getElementById('print_bill_quantity' + id).innerText = "x" + quantity;
                         document.getElementById('cgst_print').innerText = "₹" + gstAmount;
                         document.getElementById('sgst_print').innerText = "₹" + gstAmount;
-                        document.getElementById('print_grand_total').innerText = "₹" + finalvalue;
-                        var radioButtons = document.getElementsByName('radioGroup');
+                        document.getElementById('print_grand_total').innerText = "₹" + totalValue;
+                        var payment_method = document.getElementById('payment_method').value;
+                        document.getElementById('paid_via').innerText = payment_method;
 
-                        for (var i = 0; i < radioButtons.length; i++) {
-                            if (radioButtons[i].checked) {
-                                var selectedValue = radioButtons[i].value;
-                                console.log('Selected Value:', selectedValue);
-                                document.getElementById('paid_via').innerText = selectedValue;
-                                break;
-                            }
-                        }
                     }
 
                     function printDivc(divname) {
-
                         var contentDiv = document.getElementById(divname);
 
                         // Get the HTML content
@@ -537,8 +483,10 @@ if (isset($_SESSION['email'])) {
                         var styleContent = "";
                         var styleTags = contentDiv.getElementsByTagName("style");
                         for (var i = 0; i < styleTags.length; i++) {
+                            console.log(styleTags[i]);
                             styleContent += styleTags[i].innerHTML;
                         }
+
                         // Create a new window
                         var newWindow = window.open("", "_blank");
 
@@ -551,6 +499,19 @@ if (isset($_SESSION['email'])) {
                         newWindow.document.close();
                     }
 
+                    function testing() {
+                        var total_ticket_price = document.querySelectorAll('[id*="total_ticket_price"]');
+                        // Loop through the selected elements
+                        let total = 0;
+                        total_ticket_price.forEach(element => {
+                            // Do something with each element
+                            const value = parseFloat(element.textContent);
+                            // Add the value to the total
+                            total += value;
+                            console.log(total);
+                        });
+                        document.getElementById('bill_total').innerHTML = total;
+                    }
 
                     function removeToCart() {
                         remove = document.querySelectorAll('#delete');
@@ -587,6 +548,7 @@ if (isset($_SESSION['email'])) {
 
                     }
 
+
                     const tickets_name = [];
                     const quantity_name = [];
 
@@ -596,20 +558,23 @@ if (isset($_SESSION['email'])) {
                         var email = document.getElementById('email').value;
                         var mobile = document.getElementById('mobile').value;
                         var discount = document.getElementById('discount').value;
-                        var payment_method = document.getElementById('paid_via').innerText;
-                        var date = document.getElementById('date').value;
+                        var payment_method = document.getElementById('payment_method').value;
+                        // var date = document.getElementById('date').value;
 
 
                         const ticketsname = Array.from(document.querySelectorAll('#package_name'));
                         const tickets_name = ticketsname.map(element => element.innerHTML).join(',');
+                        console.log(tickets_name);
+
                         const quantityname = Array.from(document.querySelectorAll('[id*="bill_quantity"]'));
                         const quantity_name = quantityname.map(element => element.value).join(',');
+                        console.log(quantity_name);
 
                         // Create a new XMLHttpRequest object
                         const xhr = new XMLHttpRequest();
 
                         // Define the AJAX request
-                        xhr.open("GET", "./helpers/process.php?username=" + username + "&&payment_method=" + payment_method + "&&ticket_check_in_date=" + date + "&&discount=" + discount + "&&ticket_types=" + tickets_name + "&&email=" + email + "&&phone=" + mobile + "&&client_code=" + client_code + "&&quantity=" + quantity_name);
+                        xhr.open("GET", "./helpers/process.php?username=" + username + "&&payment_method=" + payment_method + "&&discount=" + discount + "&&ticket_types=" + tickets_name + "&&email=" + email + "&&phone=" + mobile + "&&client_code=" + client_code + "&&quantity=" + quantity_name);
                         xhr.onreadystatechange = function() {
                             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                                 const response = xhr.responseText;
@@ -624,15 +589,18 @@ if (isset($_SESSION['email'])) {
 
                     }
 
+
                     function getUsername(str) {
                         var username = str;
                         document.getElementById('bill_username').innerText = username;
+
                     }
 
                     window.onload = function getInvoice() {
                         var invoice = document.getElementById('client_code').value;
                         document.getElementById('bill_invoice').innerHTML = invoice;
                     }
+
 
                     function getEmail(str) {
                         var email = str;
@@ -645,33 +613,25 @@ if (isset($_SESSION['email'])) {
                     }
 
                     function add_item(id) {
-                        var newValue = document.getElementById('bill_quantity' + id).value++;
-                        newValue++;
-                        if (newValue >= 0) {
-                            billTotal(newValue, id);
-                        }
+                        var newVal = document.getElementById('bill_quantity' + id).value++;
+                        newVal++;
+                        console.log("new Value= " + newVal);
+                        billTotal(newVal, id);
                     }
 
                     function subtract_item(id) {
-                        var newValue = document.getElementById('bill_quantity' + id).value;
-                        if (newValue > 1) {
-                            var newValue = document.getElementById('bill_quantity' + id).value--;
-                            newValue--;
-                            newValue = newValue.toString();
-                            console.log(newValue);
-                            billTotal(newValue, id);
-                        }
+                        newVal = document.getElementById('bill_quantity' + id).value--;
+                        billTotal(newVal, id)
                     }
+
 
                     function remove_item(id) {
                         document.getElementById(id).remove();
-                        var newValue = 0;
-                        newValue = newValue.toString()
-                        updatePrice()
+
                     }
                 </script>
                 <?php include('./components/footer.php') ?>
-                <?php include('./components/scripts.php') ?>
                 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
                 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+                <?php include('./components/scripts.php') ?>
