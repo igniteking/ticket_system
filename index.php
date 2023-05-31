@@ -422,6 +422,7 @@ if (isset($_SESSION['email'])) {
                             console.log('Element ID:', elementId);
                         } else {
                             console.log('No elements found with the class name:', elements);
+                            location.reload();
                         }
                         var str = document.getElementById("bill_quantity" + elementId).value;
                         console.log("str " + str);
@@ -475,12 +476,6 @@ if (isset($_SESSION['email'])) {
                             console.log(quantity);
                         }
                         var package_price = document.getElementById('package_price' + id).innerText;
-                        var discount = document.getElementById('discount').value;
-                        console.log(discount)
-                        if (discount.length > 0) {
-                            package_price = package_price - discount;
-                            console.log("Discounted price = " + package_price);
-                        }
 
                         var total = package_price * quantity;
 
@@ -496,6 +491,14 @@ if (isset($_SESSION['email'])) {
 
                         totalValue = Math.round(totalValue)
                         console.log(totalValue);
+                        var discount = document.getElementById('discount').value;
+                        console.log(discount)
+                        if (discount.length > 0) {
+                            totalValue = totalValue - discount;
+                            console.log("Discounted price = " + totalValue);
+                        }
+
+
                         gstAmount = Math.round(gstAmount)
                         var mathtotal = Math.round(total)
                         document.getElementById('total_ticket_price' + id).innerText = totalValue;
@@ -544,7 +547,7 @@ if (isset($_SESSION['email'])) {
 
                         // Set the content of the new page
                         newWindow.document.open();
-                        newWindow.document.write('<!DOCTYPE html><html><head><link rel="stylesheet" href="./Invoice/style.css"></link></head><body>' + htmlContent + '</body></html>');
+                        newWindow.document.write('<!DOCTYPE html><html><head><link rel="stylesheet" href="./style.css"></link></head><body>' + htmlContent + '</body></html>');
                         newWindow.onload = function() {
                             newWindow.print();
                         };
@@ -602,7 +605,7 @@ if (isset($_SESSION['email'])) {
 
                         const ticketsname = Array.from(document.querySelectorAll('#package_name'));
                         const tickets_name = ticketsname.map(element => element.innerHTML).join(',');
-                        const quantityname = Array.from(document.querySelectorAll('[id*="bill_quantity"]'));
+                        const quantityname = Array.from(document.querySelectorAll('[id^="bill_quantity"]'));
                         const quantity_name = quantityname.map(element => element.value).join(',');
 
                         // Create a new XMLHttpRequest object

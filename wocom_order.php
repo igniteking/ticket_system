@@ -63,7 +63,7 @@ use Automattic\WooCommerce\Client;
 
 
                                                                         $woocommerce = new Client(
-                                                                            'https://chalofuncity.com/backold', // Your store URL
+                                                                            'https://chalofuncity.com/', // Your store URL
                                                                             $api->consumerkey, // Your consumer key
                                                                             $api->consumersecret, // Your consumer secret
                                                                             [

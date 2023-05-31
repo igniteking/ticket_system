@@ -3,11 +3,11 @@ include('../connections/connection.php');
 $ticket_type = $_GET['ticket_type'];
 $date_from = $_GET['date_from'];
 $date_to = $_GET['date_to'];
-$check_user = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM ticket WHERE ticket_name = '$ticket_type'"));
+$check_user = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM ticket"));
 if ($check_user > 0) {
-    if ($date_from and $date_to and $ticket_type) {
-        $fetch_data = mysqli_query($conn, "SELECT * FROM ticket WHERE ticket_name = '$ticket_type' AND created_at BETWEEN '$date_from' AND '$date_to'");
-        $coubnts = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM ticket WHERE ticket_name = '$ticket_type' AND created_at BETWEEN '$date_from' AND '$date_to'"));
+    if ($date_from and $date_to) {
+        $fetch_data = mysqli_query($conn, "SELECT * FROM ticket WHERE created_at BETWEEN '$date_from' AND '$date_to'");
+        $coubnts = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM ticket WHERE created_at BETWEEN '$date_from' AND '$date_to'"));
 
         if ($fetch_data) {
             echo '

@@ -146,7 +146,7 @@
                                                                                     </div>';
                                                                             } else if ($fetch_data) {
                                                                                 echo '
-                                                                            <div class="table-responsive">
+                                                                            <div class="">
                                                                                 <table class="table table-hover table-striped">
                                                                                     <thead>
                                                                                         <tr>

@@ -59,16 +59,17 @@ include('./connections/global.php');
         <i class="menu-icon mdi mdi-content-paste"></i>
         <span class="menu-title">View Category</span>
       </a>
-    </li>';
-    }
-    ?>
+    </li>
     <li class="nav-item nav-category">User</li>
     <li class="nav-item">
       <a href="clients_list.php" class="nav-link">
         <i class="menu-icon mdi mdi-account-box"></i>
         <span class="menu-title">Users</span>
       </a>
-    </li>
+    </li>';
+    }
+    ?>
+    
     <li class="nav-item nav-category">Ticket</li>
     <li class="nav-item">
       <a href="ticket_list.php" class="nav-link">
