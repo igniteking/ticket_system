@@ -269,7 +269,7 @@ if (isset($_SESSION['email'])) {
                     </div>
                 </div>
                 <div id="printed" style="display: none;">
-                    <div id="invoice-POS">
+                    <div id="">
                         <div id="mid">
                             <div class="info">
                                 <center>

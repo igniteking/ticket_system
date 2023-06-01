@@ -1,6 +1,10 @@
+body {
+  padding: 0px;
+  width: 0px;
+}
 #invoice-POS {
   box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
-  width: 57.15mm;
+  width: 32mm;
   background: #FFF;
 }
 
@@ -111,3 +115,4 @@ table {
 #legalcopy {
   margin-top: 5mm;
 }
+

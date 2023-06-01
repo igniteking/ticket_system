@@ -74,7 +74,7 @@
                                                                                 <td><label class="badge badge-danger">' . $created_at . '</label></td>
                                                                                 <td>
                                                                                 '; ?>
-                                                                                <button type="submit" class="btn btn-outline-danger" onclick="doConfirm(<?php echo $client_id; ?>);">Delete Admin</button>
+                                                                                <button type="submit" class="btn btn-outline-danger" onclick="doConfirm(<?php echo $client_id; ?>);">Delete Cashier</button>
                                                                         <?php echo '
                                                                                 </td>
                                                                                 </tr>';

@@ -30,7 +30,7 @@
 
     ?>
 
-    <div id="invoice-POS">
+    <div id="">
         <div id="mid">
             <div class="info">
                 <center>

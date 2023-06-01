@@ -51,7 +51,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <select name="user_type" class="form-control form-control-lg" id="exampleInputPassword1">
-                                                    <option value="admin">Admin</option>
+                                                    <option value="admin">Cashier</option>
                                                     <option value="food_stall">Food Stall</option>
                                                 </select>
                                             </div>
