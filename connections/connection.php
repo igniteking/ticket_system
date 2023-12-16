@@ -1,4 +1,10 @@
 <?php
+// $dbServername = "localhost";
+// $dbUsername = "chaloqgz_waterpark";
+// $dbPassword = "$*5c{N+C0+%K";
+// $dbName = "chaloqgz_waterpark";
+
+
 $dbServername = "localhost";
 $dbUsername = "root";
 $dbPassword = "";
@@ -12,4 +18,3 @@ if (isset($_SESSION['user_email'])) {
 } else {
     $email = "No User";
 }
-?>

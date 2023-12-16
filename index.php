@@ -10,7 +10,7 @@ if (isset($_SESSION['email'])) {
 }
 ?>
 
-<body>
+<body class="sidebar-icon-only">
     <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
         <?php include('./components/navbar.php'); ?>
@@ -24,47 +24,41 @@ if (isset($_SESSION['email'])) {
                 <div class="content-wrapper">
                     <div class="row">
                         <div class="col-md-2">
-                            <div class="card" onclick="changeprice('0')">
-                                <div class="card-body">
+                            <div class="card btn" id="0" onclick="changeprice('0')">
+                                <div class="">
                                     <center>
-                                        <h4 id="ticket_types">AMUSEMENT PARK</h4>
+                                        <h4 id="ticket_types">AMUSEMENT</h4>
                                     </center>
                                 </div>
                             </div>
-                            <div class="card mt-4" onclick="changeprice('1')">
-                                <div class="card-body">
+                            <div class="card mt-4 btn" id="1" onclick="changeprice('1')">
+                                <div class="">
                                     <center>
                                         <h4 id="ticket_types">WUNDER WATER</h4>
                                     </center>
                                 </div>
                             </div>
-                            <div class="card mt-4" onclick="changeprice('2')">
-                                <div class="card-body">
+                            <div class="card mt-4 btn" id="2" onclick="changeprice('2')">
+                                <div class="">
                                     <center>
-                                        <h4 id="ticket_types">COMBO – AMUSEMENT PARK + WATER PARK</h4>
+                                        <h4 id="ticket_types">COMBO</h4>
                                     </center>
                                 </div>
                             </div>
-                            <div class="card mt-4" onclick="changeprice('3')">
-                                <div class="card-body">
+                            <div class="card mt-4 btn" id="3" onclick="changeprice('3')">
+                                <div class="">
                                     <center>
-                                        <h4 id="ticket_types">Yearly Membership – Couple</h4>
+                                        <h4 id="ticket_types">COUPLE</h4>
                                     </center>
                                 </div>
                             </div>
-                            <div class="card mt-4" onclick="changeprice('4')">
-                                <div class="card-body">
+                            <div class="card mt-4 btn" id="4" onclick="changeprice('4')">
+                                <div class="">
                                     <center>
-                                        <h4 id="ticket_types">Yearly Membership – Family</h4>
+                                        <h4 id="ticket_types">FAMILY</h4>
                                     </center>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-10">
-                            <div id="notification"></div>
-                            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add User Details</button>
-                            <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal1" data-whatever="@mdo">Add Payment Method</button>
-                            <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModal2" data-whatever="@mdo">Add Discount</button>
                             <div class="row">
                                 <div class="form-group col-md-4">
                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -79,6 +73,15 @@ if (isset($_SESSION['email'])) {
                                                 <div class="modal-body">
                                                     <label for="username">Username</label>
                                                     <input type="hidden" name="client_code" id="client_code" value="<?= rand(); ?>">
+                                                    <input type="hidden" name="created_by" id="created_by" value="<?= $_SESSION['email'] ?>">
+                                                    <input type="hidden" name="bill_invoice_value" id="bill_invoice_value" value="<?php $es = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `ticket`")) + 1;
+                                                                                                                                    if ($es < 10) {
+                                                                                                                                        echo '00' . $es;
+                                                                                                                                    } else if ($es < 100) {
+                                                                                                                                        echo '0' . $es;
+                                                                                                                                    } else {
+                                                                                                                                        echo $es;
+                                                                                                                                    } ?>">
                                                     <input list="username" class="form-control form-control-lg col-md-4" id="username" onchange="getUsername(this.value)" name="username" placeholder="Username">
                                                     <datalist id="username">
                                                         <?php
@@ -133,53 +136,75 @@ if (isset($_SESSION['email'])) {
                                                 </div>
                                                 <div class="modal-body">
                                                     <label for="discount">Discount (INR)</label>
-                                                    <input type="number" class="form-control form-control-lg col-md-4" id="discount" name="discount" placeholder="Discount in INR">
-                                                </div>
-                                                <button type="button" onclick=" updatePrice()" class="btn btn-primary">Done</button>
-                                            </div>
-                                            <div class="modal-footer">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Payment Method</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <label for="payment_method">Payment Method</label>
-                                                    <div class="form-check">
-                                                        <label class="form-check-label" for="radioOption1">
-                                                            Cash
-                                                            <input class="form-check-input" type="radio" name="radioGroup" checked id="radioOption1" value="Cash">
-                                                        </label>
-                                                    </div>
-
-                                                    <div class="form-check">
-                                                        <label class="form-check-label" for="radioOption2">
-                                                            Card
-                                                            <input class="form-check-input" type="radio" name="radioGroup" id="radioOption2" value="Card">
-                                                        </label>
-                                                    </div>
-
-                                                    <div class="form-check">
-                                                        <label class="form-check-label" for="radioOption3">
-                                                            UPI
-                                                            <input class="form-check-input" type="radio" name="radioGroup" id="radioOption3" value="UPI">
-                                                        </label>
-                                                    </div>
+                                                    <input type="number" onblur="updatePrice()" class="form-control form-control-lg col-md-4" id="discount" name="discount" placeholder="Discount in INR">
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-primary">Done</button>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div id="notification"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div type="button" class="card mt-4 bg-info text-white btn text-center" style="font-size: 17px; width: 100%; height: 60px; font-weight: 600;" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add User Details</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div type="button" class="card mt-4 bg-info text-white btn text-center" style="font-size: 17px; width: 100%; height: 60px; font-weight: 600;" data-toggle="modal" data-target="#exampleModal2" data-whatever="@mdo">Add Discount</div>
+                                </div>
+                            </div>
+                            <div class="row card-body">
+                                <label for="payment_method">Payment Method</label>
+                                <div class="col-md-2">
+                                    <div class="form-check">
+                                        <label class="form-check-label" for="radioOption1">
+                                            Cash
+                                            <input class="form-check-input" onclick="payment_type(this.value)" type="radio" name="radioGroup" checked id="radioOption1" value="Cash">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-check">
+                                        <label class="form-check-label" for="radioOption2">
+                                            Card
+                                            <input class="form-check-input" onclick="payment_type(this.value)" type="radio" name="radioGroup" id="radioOption2" value="Card">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-check">
+                                        <label class="form-check-label" for="radioOption4">
+                                            Phonepe
+                                            <input class="form-check-input" onclick="payment_type(this.value)" type="radio" name="radioGroup" id="radioOption4" value="Phonepe">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-check">
+                                        <label class="form-check-label" for="radioOption5">
+                                            NEFT/RTGS
+                                            <input class="form-check-input" onclick="payment_type(this.value)" type="radio" name="radioGroup" id="radioOption5" value="NEFT/RTGS">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-check">
+                                        <label class="form-check-label" for="radioOption6">
+                                            Shoutlo
+                                            <input class="form-check-input" onclick="payment_type(this.value)" type="radio" name="radioGroup" id="radioOption6" value="Shoutlo">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-check">
+                                        <label class="form-check-label" for="radioOption7">
+                                            Razorpay
+                                            <input class="form-check-input" onclick="payment_type(this.value)" type="radio" name="radioGroup" id="radioOption7" value="Razorpay">
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -198,6 +223,9 @@ if (isset($_SESSION['email'])) {
                                                     </th>
                                                     <th>
                                                         Price / Ticket
+                                                    </th>
+                                                    <th>
+                                                        Discount
                                                     </th>
                                                     <th>
                                                         Total Ticket Price
@@ -257,7 +285,7 @@ if (isset($_SESSION['email'])) {
                                                 <tr>
                                                     <td>
                                                         <button onclick="onSubmitButton('ticket')" class="btn btn-inverse-primary col-md-12"><i class="mdi mdi-download"></i> Save & Print</button>
-                                                        <button onclick="printDivc('printed')" class="btn btn-inverse-info col-md-12"> <i class="mdi mdi-printer"></i> Print</button>
+                                                        <?php if ($user_type == 'superadmin') { ?><button onclick="printDivc('printed')" class="btn btn-inverse-info col-md-12"> <i class="mdi mdi-printer"></i> Print</button><?php } ?>
                                                     </td>
                                                 </tr>
                                             </tfoot>
@@ -269,412 +297,442 @@ if (isset($_SESSION['email'])) {
                     </div>
                 </div>
                 <div id="printed" style="display: none;">
-                    <div id="">
-                        <div id="mid">
-                            <div class="info">
-                                <center>
-                                    <h2>Surya Funcity limited</h2>
-                                    <p>
-                                        Vill Daffarpur, Chandigarh - Barwala</br>
-                                        Highway, Distt SAS Nagar Mohali,</br>
-                                        Punjab - 140201</br>
-                                    </p>
-                            </div>
-                        </div>
-                        </center><!--End Invoice Mid-->
-                        <hr>
+                    <style>
+                        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&amp;display=swap');
 
-                        <p><label>Name:</label>
-                            <z style="font-size:10px;" id="bill_username"></z>
-                            <hr style="margin-top:-10px;">
-                        </p>
+                        *,
+                        ::after,
+                        ::before {
+                            box-sizing: border-box;
+                        }
 
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <p> <label>Date: </label>
-                                    <z style="font-size:10px;"><?= date('d-m-Y') ?></z>
-                                </p>
-                            </div>
-                            <div class="col-sm-6">
-                                <p><label> Dine: </label><input type="text" name="" id="" style="width:40px; border:none;"></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <p>Cashier: Biller</p>
-                            </div>
-                            <div class="col-sm-6">
-                                <p><label> Bill No: </label>
-                                    <z style="font-size:8px;" id="bill_invoice"></z>
-                                </p>
-                            </div>
+                        body {
+                            color: #000;
+                            font-size: 14px;
+                            font-weight: 400;
+                            line-height: 1.4em;
+                            margin: 0;
+                            font-family: 'Inter', sans-serif;
+                            background-color: #f5f6fa;
+                        }
 
-                        </div>
-                        <hr style="margin-top:-10px;">
-                        <div id="bot">
+                        .ap_inpos_invoice_wrap {
+                            max-width: 340px;
+                            margin: auto;
+                            margin-top: 30px;
+                            padding: 30px 20px;
+                            background-color: #fff;
+                        }
 
-                            <div id="table">
-                                <table>
+                        .ap_inpos_company_logo {
+                            display: flex;
+                            justify-content: center;
+                            margin-bottom: 7px;
+                        }
+
+                        .ap_inpos_company_logo img {
+                            vertical-align: middle;
+                            border: 0;
+                            max-width: 100%;
+                            height: auto;
+                            max-height: 45px;
+                        }
+
+                        .ap_inpos_invoice_top {
+                            text-align: center;
+                            margin-bottom: 18px;
+                        }
+
+                        .ap_inpos_invoice_heading {
+                            display: flex;
+                            justify-content: center;
+                            position: relative;
+                            text-transform: uppercase;
+                            font-size: 14px;
+                            font-weight: 500;
+                            margin: 10px 0;
+                        }
+
+                        .ap_inpos_invoice_heading:before {
+                            content: '';
+                            position: absolute;
+                            height: 0;
+                            width: 100%;
+                            left: 0;
+                            top: 46%;
+                            border-top: 1px solid #b5b5b5;
+                        }
+
+                        .ap_inpos_invoice_heading span {
+                            display: inline-flex;
+                            padding: 0 5px;
+                            background-color: #fff;
+                            z-index: 1;
+                            font-weight: 500;
+                            color: #111;
+                        }
+
+                        .tm_list.tm_style1 {
+                            list-style: none;
+                            padding: 0;
+                            margin: 0;
+                            display: flex;
+                            flex-wrap: wrap;
+                        }
+
+                        .tm_list.tm_style1 li {
+                            display: flex;
+                            width: 50%;
+                            font-size: 14px;
+                            line-height: 1.2em;
+                            margin-bottom: 7px;
+                        }
+
+                        .text-right {
+                            text-align: right;
+                            justify-content: flex-end;
+                        }
+
+                        .tm_list_title {
+                            margin-right: 4px;
+                            margin-bottom: -9px;
+                        }
+
+                        .tm_invoice_seperator {
+                            width: 100%;
+                            border-top: 1px Solid #b5b5b5;
+                            margin: 9px 0;
+                            margin-left: auto;
+                        }
+
+                        .ap_inpos_invoice_table {
+                            width: 100%;
+                            margin-top: 0px;
+                            line-height: 1.3em;
+                        }
+
+                        .ap_inpos_invoice_table thead th {
+                            font-weight: 500;
+                            color: #111;
+                            text-align: left;
+                            padding: 8px 3px;
+                            border-top: 1px Solid #b5b5b5;
+                            border-bottom: 1px Solid #b5b5b5;
+                        }
+
+                        .ap_inpos_invoice_table td {
+                            padding: 4px;
+                        }
+
+                        .ap_inpos_invoice_table tbody tr:first-child td {
+                            padding-top: 10px;
+                        }
+
+                        .ap_inpos_invoice_table tbody tr:last-child td {
+                            padding-bottom: 10px;
+                            border-bottom: 1px Solid #b5b5b5;
+                        }
+
+                        .ap_inpos_invoice_table th:last-child,
+                        .ap_inpos_invoice_table td:last-child {
+                            text-align: right;
+                            padding-right: 0;
+                        }
+
+                        .ap_inpos_invoice_table th:first-child,
+                        .ap_inpos_invoice_table td:first-child {
+                            padding-left: 0;
+                        }
+
+                        .ap_inpos_invoice_table tr {
+                            vertical-align: baseline;
+                        }
+
+                        .ap_inbill_list {
+                            list-style: none;
+                            margin: 0;
+                            padding: 8px 0;
+                            border-bottom: 1px Solid #b5b5b5;
+                        }
+
+                        .ap_inbill_list_in {
+                            display: flex;
+                            text-align: right;
+                            justify-content: flex-end;
+                            padding: 3px 0;
+                        }
+
+                        .ap_inbill_title {
+                            padding-right: 20px;
+                        }
+
+                        .ap_inbill_value {
+                            width: 90px;
+                        }
+
+                        .ap_inbill_value.ap_inbill_focus,
+                        .ap_inbill_title.ap_inbill_focus {
+                            font-weight: 500;
+                            color: #111;
+                        }
+
+                        .ap_inpos_invoice_footer {
+                            text-align: center;
+                            margin-top: 20px;
+                        }
+
+                        .ap_inpos_sample_text {
+                            text-align: center;
+                            padding: 12px 0;
+                            border-bottom: 1px Solid #b5b5b5;
+                            line-height: 1.6em;
+                            color: #9c9c9c;
+                            font-size: 12px;
+                        }
+
+                        .ap_inpos_company_name {
+                            font-weight: 500;
+                            color: #111;
+                            font-size: 18px;
+                            line-height: 1.4em;
+                        }
+                    </style>
+                    </head>
+
+                    <body>
+                        <div class="ap_inpos_invoice_wrap">
+                            <div class="ap_inpos_invoice_top">
+                                <div class="ap_inpos_company_name">Surya Funcity Limited</div>
+                                <div class="ap_inpos_company_address">Vill Daffarpur, Chandigarh - Barwala</div>
+                                <div class="ap_inpos_company_address">Highway, Distt SAS Nagar Mohali,</div>
+                                <div class="ap_inpos_company_mobile">Punjab - 140201</div>
+                            </div>
+                            <div class="ap_inpos_invoice_body">
+                                <div class="ap_inpos_invoice_heading"></div>
+                                <ul class="tm_list tm_style1">
+                                    <li>
+                                        <div class="tm_list_title">Name:</div>
+                                        <div id="bill_username" class="tm_list_desc"></div>
+                                    </li>
+                                </ul>
+                                <div class="tm_invoice_seperator"></div>
+                                <ul class="tm_list tm_style1">
+                                    <li>
+                                        <div class="tm_list_title">Date:</div>
+                                        <div class="tm_list_desc"><?= date('d/m/Y') ?></div>
+                                    </li>
+                                    <li class="text-right">
+                                        <div class="tm_list_title">Time:</div>
+                                        <div class="tm_list_desc"><?= date('H:i') ?></div>
+                                    </li>
+                                    <li>
+                                        <div class="tm_list_title">Cashier:</div>
+                                        <div class="tm_list_desc">biller</div>
+                                    </li>
+                                    <li class="text-right">
+                                        <div class="tm_list_title">Bill No:</div>
+                                        <div id="bill_invoice" class="tm_list_desc">3194</div>
+                                    </li>
+                                </ul>
+                                <table class="ap_inpos_invoice_table" cellspacing="0" cellpadding="0">
                                     <thead>
-                                        <tr class="tabletitle">
-                                            <td class="item">
-                                                <h2>Item</h2>
-                                            </td>
-                                            <td class="Hours">
-                                                <h2>Qty</h2>
-                                            </td>
-                                            <td class="Hours">
-                                                <h2>Price</h2>
-                                            </td>
-                                            <td class="Rate">
-                                                <h2>Amount</h2>
-                                            </td>
+                                        <tr>
+                                            <th style="text-align:center;">Item</th>
+                                            <th style="text-align:center;">Qty</th>
+                                            <th style="text-align:center;">Price</th>
+                                            <th style="text-align:center;">Discount</th>
+                                            <th style="text-align:center;">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="new_bill_row">
+                                        <!-- copy this code and print 5 times -->
+                                        <!-- copy this code and print 5 times -->
+
+                                    </tbody>
+                                </table>
+                                <div class="ap_inbill_list">
+                                    <div class="ap_inbill_list_in">
+                                        <div class="ap_inbill_title">Total Qty: <span id="ttl_quantity"></span></div>
+                                        <div class="ap_inbill_value">Sub Total</div>
+                                        <div class="ap_inbill_value" id="gstAmount_fill">5084.75</div>
+                                    </div>
+                                    <div class="ap_inbill_list_in">
+                                        <div class="ap_inbill_title">CGST: </div>
+                                        <div class="ap_inbill_value">9%</div>
+                                        <div class="ap_inbill_value" id="cgst_print">457.63</div>
+                                        <div class="ap_inbill_value" id="hidden_print" style="display: none;"></div>
+                                    </div>
+                                    <div class="ap_inbill_list_in">
+                                        <div class="ap_inbill_title">SGST: </div>
+                                        <div class="ap_inbill_value">9%</div>
+                                        <div class="ap_inbill_value" id="sgst_print">457.63</div>
+                                    </div>
+                                    <div class="tm_invoice_seperator"></div>
+                                    <!-- <div class="ap_inbill_list_in">
+                                        <small>
+                                            <div class="ap_inbill_title">Round Off:</div>
+                                        </small>
+                                        <div class="ap_inbill_value">-0.01</div>
+                                    </div> -->
+
+                                    <div class="ap_inbill_list_in">
+                                        <div class="ap_inbill_title ap_inbill_focus">Grand Total:</div>
+                                        <div class="ap_inbill_value ap_inbill_focus" id="print_grand_total">6000.00</div>
+                                    </div>
+                                    <tr>
+                                        <td>Paid Via </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <z id="paid_via"></z>
+                                        </td>
+                                    </tr>
+                                </div>
+
+                                <div class="ap_inpos_invoice_footer">Thank You</div>
+                                <div class="ap_inpos_company_address" style="text-align: center;">GST No: 03AACCS29991ZA </div>
+                                <div class="ap_inpos_company_address" style="text-align: center;">Bank Details:</div>
+                                <div class="ap_inpos_company_address" style="text-align: center;">Bank Of India</div>
+                                <div class="ap_inpos_company_address" style="text-align: center;">AC No. 620225100001187</div>
+                                <div class="ap_inpos_company_address" style="text-align: center;">IFSC: BKID0006202<div>
+                                        <div class="ap_inpos_company_address" style="text-align: center;">Bank of India, Sector 32, Chandigarh</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div id="printed" style="display: none;">
+                            <center>
+                                <header>
+                                    <h3>Surya Funcity Limited</h3>
+                                    <p>
+                                        Vill Daffarpur, Chandigarh - Barwala<br />Highway, Distt SAS Nagar,
+                                        Mohali, <br />
+                                        Punjab -140201
+                                    </p>
+                                </header>
+                            </center>
+
+                            <div class="line"></div>
+
+                            <div class="Cashier_details table">
+                                <div class="row">
+                                    <div class="col">
+                                        <p>
+                                            <label>Name:</label>
+                                            <label for="" id="bill_username"></label>
+                                        </p>
+                                    </div>
+                                    <div class="line"></div>
+                                </div>
+                            </div>
+                            <div class="Cashier_details table">
+                                <div class="row">
+                                    <div class="col">
+                                        <p>
+                                            <label for="">Date:</label>
+                                            <?= date('d/m/Y H:i') ?>
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: -15px">
+                                    <div class="col">
+                                        <p>
+                                            <label for="">Cashier: </label>
+                                            <label for=""><?= $username ?></label>
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p>
+                                            <label for="">Bill no.</label>
+                                            <label for="" id="bill_invoice"></label>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="line"></div>
+
+                            <div class="billing_details">
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Item</th>
+                                            <th scope="col">Qty.</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Discount</th>
+                                            <th scope="col">Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody id="new_bill_row">
                                     </tbody>
-
-
-                                    <tr class="tabletitle">
-                                        <td></td>
-                                        <td class="Rate">
-                                            <h2>Sub Total</h2>
-                                        </td>
-                                        <td class="payment">
-                                            <h2>Amount</h2>
-                                        </td>
-                                        <td></td>
-                                    </tr>
-
-                                    <tr class="tabletitle">
-                                        <td>CGST</td>
-                                        <td class="Rate">
-                                            <h2>9%</h2>
-                                        </td>
-                                        <td class="payment" id="cgst_print">
-                                            <h2></h2>
-                                        </td>
-                                        <td></td>
-                                    </tr>
-
-                                    <tr class="tabletitle">
-                                        <td>SGST</td>
-                                        <td class="Rate">
-                                            <h2>9%</h2>
-                                        </td>
-                                        <td class="payment" id="sgst_print">
-                                            <h2></h2>
-                                        </td>
-                                        <td></td>
-                                    </tr>
-
-                                    <tr class="tabletitle">
-                                        <td>
-                                            <h1>Grandtotal:</h1>
-                                        </td>
-                                        <td></td>
-                                        <td class="payment">
-                                            <h2 id="print_grand_total"></h2>
-                                        </td>
-                                        <td></td>
-                                    </tr>
-
-                                    <tr class="tabletitle">
-                                        <td>
-                                            <h2>Paid Via Other</h2>
-                                        </td>
-                                        <td>
-                                            <p id="paid_via"></p>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-
-                                    </tr>
-
                                 </table>
-                            </div><!--End Table-->
-
-                            <div id="legalcopy">
-                                <center>
-                                    <p class="legal"><strong>Thank you!</strong> <br>
-                                        GST No: 03AACCS299F12A <br>
-                                        Bank Details: <br>
-                                        Bank Of India <br>
-                                        A/C No.: 620225100001187 <br>
-                                        IFSC: BKID0006202 <br>
-                                        Bank Of India, Sector 32, Chandigarh
-
-                                    </p>
-                                </center>
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr style="border-top: 2px solid #000; border-bottom: 2px solid #000;">
+                                            <th scope="col">Total Qty: <span id="ttl_quantity">0</span></th>
+                                            <th scope="col">Sub Total</th>
+                                            <th scope="col" id="gstAmount_fill">₹ 00.00</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">CGST</th>
+                                            <td>9%</td>
+                                            <td id="cgst_print"></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">SGST</th>
+                                            <td>9%</td>
+                                            <td id="sgst_print"></td>
+                                        </tr>
+                                        <tr style="border-top: 2px solid #000; border-bottom: 2px solid #000;">
+                                            <th></th>
+                                            <td>
+                                                <h3>Grand Total:</h3>
+                                            </td>
+                                            <td id="print_grand_total"></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Paid Via: <z id="paid_via"></z>
+                                            </th>
+                                            <td id="paid_via"></td>
+                                            <th></th>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
+                            <center>
+                                <footer>
+                                    <p>
+                                        Thank You <br />
+                                        GST No: 03AACCS2999F1ZA <br />
+                                        Bank Details: <br />
+                                        Bank Of India <br />
+                                        AC No. 620225100001187 <br />
+                                        IFSC: BKID0006202 <br />
+                                        Bank of India, Sector 32, Chandigarh
+                                    </p>
+                                </footer>
+                            </center>
+                            <script>
+                                window.onload = function() {
+                                    var total_quantity = document.getElementById("total_quantity").value;
+                                    var gstAmount = document.getElementById("gstAmount").value;
+                                    document.getElementById("ttl_quantity").innerText = total_quantity;
+                                    document.getElementById("gstAmount_fill").innerText = '₹ ' + gstAmount;
+                                }
+                            </script>
+                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+                        </div> -->
+                </div>
+</body>
 
-                        </div><!--End InvoiceBot-->
-                    </div><!--End Invoice-->
-                </div><!--End Invoice-->
-                <script type="text/javascript">
-                    function updatePrice() {
-                        var elements = document.getElementsByClassName('bill_quantity');
-                        if (elements.length > 0) {
-                            var firstElement = elements[0];
-                            var elementId = firstElement.id;
-                            elementId = elementId.toString();
-                            elementId = elementId.slice(13, 33)
-                            console.log('Element ID:', elementId);
-                        } else {
-                            console.log('No elements found with the class name:', elements);
-                            location.reload();
-                        }
-                        var str = document.getElementById("bill_quantity" + elementId).value;
-                        console.log("str " + str);
-                        console.log("bill_quantity " + elementId)
-                        billTotal(str, elementId)
-                    }
-
-                    function changeprice(val) {
-                        var price = "";
-                        if (document.getElementById('ticket_types').innerText != null) {
-                            const package_name = document.querySelectorAll('#ticket_types');
-                            // Get the first element using index
-                            var selectedTicket = package_name[val].innerText;
-
-                            if (selectedTicket == "AMUSEMENT PARK") {
-                                price = "508.47";
-                            } else if (selectedTicket == "WUNDER WATER") {
-                                price = "1059.32";
-                            } else if (selectedTicket == "COMBO – AMUSEMENT PARK + WATER PARK") {
-                                price = "1101.69";
-                            } else if (selectedTicket == "Yearly Membership – Couple") {
-                                price = "5076.27";
-                            } else if (selectedTicket == "Yearly Membership – Family") {
-                                price = "9313.56";
-                            }
-
-                            function addRow() {
-                                var id = Math.random(10);
-                                // document.getElementById('add_item').innerHTML += '<tr id="' + id + '"><td id="package_name">' + selectedTicket + '</td><td><div class="row"><div class="col-md-2 d-flex justify-content-center align-items-center"><button type="button" onclick="add_item(' + id + ')" class="btn btn-inverse-dark btn-md btn-rounded btn-icon"><i class="mdi mdi-plus"></i></button></div><div class="col-md-8 d-flex justify-content-center align-items-center"><input type="number" min="1" value="1" name="bill_quantity" id="bill_quantity' + id + '" onchange="billTotal(this.value, ' + id + ')" class="form-control form-control-lg"></div><div class="col-md-2 d-flex justify-content-center align-items-center"><button type="button" onclick="subtract_item(' + id + ')" class="btn btn-inverse-dark btn-md btn-rounded btn-icon"><i class="mdi mdi-minus"></i></button></div></div></td><td><p class="">₹ <z id="package_price' + id + '">' + price + '</z></p></td><td><p class="">₹ <z id="total_ticket_price' + id + '"></z></p></td><td><button type="button" onclick="remove_item(' + id + ')" class="btn btn-inverse-danger btn-sm btn-rounded btn-icon"><i class="mdi mdi-close"></i></button></td></tr>';
-                                // Create a new element
-                                document.getElementById('new_bill_row').innerHTML += '<tr class="service" id="' + id + '"><td class="tableitem" id="package_name_new"><p class="itemtext">' + selectedTicket + '</p></td><td class="tableitem"><p class="itemtext" id="print_bill_quantity' + id + '"></p></td><td class="tableitem"><p class="itemtext">₹ ' + price + '</p></td><td class="tableitem"><p class="itemtext" id="print_ticket_price' + id + '">₹00.00</p></td></tr>';
-                                var newElement = document.createElement("tr");
-                                var myContainer = document.getElementById('add_item');
-                                newElement.innerHTML = '<td id="package_name">' + selectedTicket + '</td><td><div class="row"><div class="col-md-2 d-flex justify-content-center align-items-center"><button type="button" onclick="add_item(' + id + ')" class="btn btn-inverse-dark btn-md btn-rounded btn-icon"><i class="mdi mdi-plus"></i></button></div><div class="col-md-8 d-flex justify-content-center align-items-center"><input type="number" min="1" value="1" name="bill_quantity" id="bill_quantity' + id + '" onchange="billTotal(this.value, ' + id + ')" class="form-control form-control-lg bill_quantity"></div><div class="col-md-2 d-flex justify-content-center align-items-center"><button type="button" onclick="subtract_item(' + id + ')" class="btn btn-inverse-dark btn-md btn-rounded btn-icon"><i class="mdi mdi-minus"></i></button></div></div></td><td><p class="">₹ <z id="package_price' + id + '">' + price + '</z></p></td><td><p class="">₹ <z id="total_ticket_price' + id + '"></z></p></td><td><button type="button" onclick="remove_item(' + id + ')" class="btn btn-inverse-danger btn-sm btn-rounded btn-icon"><i class="mdi mdi-close"></i></button></td>';
-                                newElement.id = id;
-                                // Append the new element to the container
-                                myContainer.appendChild(newElement);
-                                billTotal(1, id)
-                            }
-                        }
-                        addRow();
-
-                    }
-
-
-                    function billTotal(str, id) {
-                        str = str.toString();
-                        var finalvalue = 0;
-                        if (str.length > 0) {
-                            var quantity = str;
-                            console.log(quantity);
-                        }
-                        var package_price = document.getElementById('package_price' + id).innerText;
-
-                        var total = package_price * quantity;
-
-                        // GST rate (in decimal form)
-                        const gstRate = 0.18;
-
-                        // Calculate GST amount
-                        var newAmount = total * gstRate;
-                        var gstAmount = newAmount / 2;
-
-                        // Calculate total value including GST
-                        var totalValue = total + newAmount;
-
-                        totalValue = Math.round(totalValue)
-                        console.log(totalValue);
-                        var discount = document.getElementById('discount').value;
-                        console.log(discount)
-                        if (discount.length > 0) {
-                            totalValue = totalValue - discount;
-                            console.log("Discounted price = " + totalValue);
-                        }
-
-
-                        gstAmount = Math.round(gstAmount)
-                        var mathtotal = Math.round(total)
-                        document.getElementById('total_ticket_price' + id).innerText = totalValue;
-                        var add_amount = document.querySelectorAll("[id^='total_ticket_price']");
-                        add_amount.forEach(add_amount => {
-                            finalvalue += parseInt(add_amount.innerText);
-                            console.log("add_amount = " + finalvalue)
-                        });
-
-
-                        document.getElementById('sgst_amount').innerHTML = gstAmount;
-                        document.getElementById('cgst_amount').innerHTML = gstAmount;
-                        document.getElementById('bill_total').innerHTML = finalvalue;
-                        document.getElementById('print_ticket_price' + id).innerText = "₹" + mathtotal;
-                        document.getElementById('print_bill_quantity' + id).innerText = "x" + quantity;
-                        document.getElementById('cgst_print').innerText = "₹" + gstAmount;
-                        document.getElementById('sgst_print').innerText = "₹" + gstAmount;
-                        document.getElementById('print_grand_total').innerText = "₹" + finalvalue;
-                        var radioButtons = document.getElementsByName('radioGroup');
-
-                        for (var i = 0; i < radioButtons.length; i++) {
-                            if (radioButtons[i].checked) {
-                                var selectedValue = radioButtons[i].value;
-                                console.log('Selected Value:', selectedValue);
-                                document.getElementById('paid_via').innerText = selectedValue;
-                                break;
-                            }
-                        }
-                    }
-
-                    function printDivc(divname) {
-
-                        var contentDiv = document.getElementById(divname);
-
-                        // Get the HTML content
-                        var htmlContent = contentDiv.innerHTML;
-
-                        // Get the CSS styles
-                        var styleContent = "";
-                        var styleTags = contentDiv.getElementsByTagName("style");
-                        for (var i = 0; i < styleTags.length; i++) {
-                            styleContent += styleTags[i].innerHTML;
-                        }
-                        // Create a new window
-                        var newWindow = window.open("", "_blank");
-
-                        // Set the content of the new page
-                        newWindow.document.open();
-                        newWindow.document.write('<!DOCTYPE html><html><head><link rel="stylesheet" href="./style.css"></link></head><body>' + htmlContent + '</body></html>');
-                        newWindow.onload = function() {
-                            newWindow.print();
-                        };
-                        newWindow.document.close();
-                    }
-
-
-                    function removeToCart() {
-                        remove = document.querySelectorAll('#delete');
-                        remove.forEach(box => {
-                            box.remove();
-                        });
-                        document.getElementById('product_total').innerHTML = '';
-                    }
-
-                    let numberValue = 0;
-                    const myObj = [];
-
-                    function addToCart() {
-                        var product_name = document.getElementById('product_name');
-                        var product_quantity = document.getElementById('product_quantity').value;
-                        var [product_name, product_price] = product_name.options[product_name.selectedIndex].text.split(' || ₹ ');
-                        document.getElementById('bill_prod').innerHTML += '<div class="col-xl-10" id="delete"><p id="arrText">' + product_name + '</p></div><div id="delete" class="col-xl-2"><p class="float-end" id="arrVal">X' + product_quantity + '</p></div>';
-                        var sum = product_quantity * product_price;
-                        const myPara = document.getElementById("product_total");
-                        if (myPara.innerHTML.length > 0) {
-                            // Get the value of the innerHTML and convert it to a number
-                            var innerValue = parseInt(myPara.innerHTML);
-                            sum = innerValue + sum;
-                        }
-                        document.getElementById('product_total').innerHTML = sum;
-                        var str = document.getElementById('bill_quantity').innerHTML;
-
-                        billTotal(str);
-
-                        var product_id = document.getElementById('product_name').value;
-                        myObj[product_id] = product_quantity + "," + product_name;
-                        var new_obj = myObj.join(",")
-                        console.log(new_obj);
-
-                    }
-
-                    const tickets_name = [];
-                    const quantity_name = [];
-
-                    function onSubmitButton() {
-                        var username = document.getElementById('username').value;
-                        var client_code = document.getElementById('client_code').value;
-                        var email = document.getElementById('email').value;
-                        var mobile = document.getElementById('mobile').value;
-                        var discount = document.getElementById('discount').value;
-                        var payment_method = document.getElementById('paid_via').innerText;
-                        var date = document.getElementById('date').value;
-
-
-                        const ticketsname = Array.from(document.querySelectorAll('#package_name'));
-                        const tickets_name = ticketsname.map(element => element.innerHTML).join(',');
-                        const quantityname = Array.from(document.querySelectorAll('[id^="bill_quantity"]'));
-                        const quantity_name = quantityname.map(element => element.value).join(',');
-
-                        // Create a new XMLHttpRequest object
-                        const xhr = new XMLHttpRequest();
-
-                        // Define the AJAX request
-                        xhr.open("GET", "./helpers/process.php?username=" + username + "&&payment_method=" + payment_method + "&&ticket_check_in_date=" + date + "&&discount=" + discount + "&&ticket_types=" + tickets_name + "&&email=" + email + "&&phone=" + mobile + "&&client_code=" + client_code + "&&quantity=" + quantity_name);
-                        xhr.onreadystatechange = function() {
-                            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                                const response = xhr.responseText;
-                                document.getElementById('notification').innerHTML = response;
-                                console.log(response);
-                                // Do something with the response data
-                            }
-                        }
-                        // Send the AJAX request with the data
-                        xhr.send();
-                        printDivc('printed')
-
-                    }
-
-                    function getUsername(str) {
-                        var username = str;
-                        document.getElementById('bill_username').innerText = username;
-                    }
-
-                    window.onload = function getInvoice() {
-                        var invoice = document.getElementById('client_code').value;
-                        document.getElementById('bill_invoice').innerHTML = invoice;
-                    }
-
-                    function getEmail(str) {
-                        var email = str;
-                        document.getElementById('bill_email').innerHTML = email;
-                    }
-
-                    function getMobile(str) {
-                        var mobile = str;
-                        document.getElementById('bill_mobile').innerHTML = mobile;
-                    }
-
-                    function add_item(id) {
-                        var newValue = document.getElementById('bill_quantity' + id).value++;
-                        newValue++;
-                        if (newValue >= 0) {
-                            billTotal(newValue, id);
-                        }
-                    }
-
-                    function subtract_item(id) {
-                        var newValue = document.getElementById('bill_quantity' + id).value;
-                        if (newValue > 1) {
-                            var newValue = document.getElementById('bill_quantity' + id).value--;
-                            newValue--;
-                            newValue = newValue.toString();
-                            console.log(newValue);
-                            billTotal(newValue, id);
-                        }
-                    }
-
-                    function remove_item(id) {
-                        document.getElementById(id).remove();
-                        var newValue = 0;
-                        newValue = newValue.toString()
-                        updatePrice()
-                    }
-                </script>
-                <?php include('./components/footer.php') ?>
-                <?php include('./components/scripts.php') ?>
-                <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-                <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</html>
+<!--End Invoice-->
+<script src="./final.js"></script>
+<?php include('./components/footer.php') ?>
+<?php include('./components/scripts.php') ?>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

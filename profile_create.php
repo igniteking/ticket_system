@@ -35,7 +35,7 @@
                                             Register($user_type, $username, $password, $r_pswd, $conn, $email, $date);
                                         }
                                         ?>
-                                        <h4>Create Admin</h4>
+                                        <h4>Create Cashier</h4>
                                         <form class="pt-3" method="post" action="./profile_create.php">
                                             <div class="form-group">
                                                 <input type="text" name="username" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username">
@@ -52,7 +52,7 @@
                                             <div class="form-group">
                                                 <select name="user_type" class="form-control form-control-lg" id="exampleInputPassword1">
                                                     <option value="admin">Cashier</option>
-                                                    <option value="food_stall">Food Stall</option>
+                                                    <!-- <option value="food_stall">Food Stall</option> -->
                                                 </select>
                                             </div>
                                             <div class="mt-3">

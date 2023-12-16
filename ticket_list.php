@@ -41,6 +41,7 @@
                                                                 <table class="table">
                                                                     <thead>
                                                                         <tr>
+                                                                            <th>Ticket Id</th>
                                                                             <th>Ticket Code</th>
                                                                             <th>Username</th>
                                                                             <th>Email</th>
@@ -61,6 +62,7 @@
                                                                             $count = mysqli_num_rows($get_client);
                                                                         }
                                                                         while ($row = mysqli_fetch_array($get_client)) {
+                                                                            $ticket_id = $row['id'];
                                                                             $ticket_code = $row['ticket_code'];
                                                                             $ticket_username = $row['ticket_username'];
                                                                             $ticket_user_email = $row['ticket_user_email'];
@@ -72,6 +74,7 @@
                                                                                 echo 'No user Found!';
                                                                             } else {
                                                                                 echo '<tr>
+                                                                                <td>' . $ticket_id . '</td>
                                                                                 <td>' . $ticket_code . '</td>
                                                                                 <td>' . $ticket_username . '</td>
                                                                                 <td>' . $ticket_user_email . '</td>
@@ -81,14 +84,20 @@
                                                                                 <td>';
                                                                                 if ($cancel_ticekt == 1) {
                                                                                     echo "<p>Ticket Canceled!</p>";
+                                                                                } else if ($cancel_ticekt == 'pending') {
+                                                                                    if ($user_type == 'superadmin') { ?>
+                                                                                        <button class='btn btn-info' onclick='CancelTicket(<?= $ticket_code ?>, "<?= $user_type ?>")'>Canelation request</button></a>
+                                                                                    <?php } else {
+                                                                                        echo "<p>pending request!</p>";
+                                                                                    }
                                                                                 } else { ?>
                                                                                     <a href="./invoice.php?ticket_code=<?= $ticket_code ?>"><button class="btn btn-outline-primary">Print Ticket</button></a>
-                                                                                    <button class="btn btn-outline-danger" onclick="CancelTicket(<?= $ticket_code ?>)">Cancel Ticket</button></a>
+                                                                                    <button class="btn btn-outline-danger" onclick="CancelTicket(<?= $ticket_code ?>, '<?= $user_type ?>')">Cancel Ticket</button></a>
                                                                                 <?php
                                                                                 }
                                                                                 if ($user_type == 'superadmin') {
                                                                                 ?>
-                                                                                    <button type="submit" class="btn btn-outline-danger" onclick="doConfirm(<?php echo $ticket_code; ?>);">Delete Ticket</button>
+                                                                                    <button type="submit" class="btn btn-outline-danger" onclick="doConfirm(<?php echo $ticket_id; ?>);">Delete Ticket</button>
                                                                         <?php }
                                                                                 echo '
                                                                                 </td>
@@ -99,7 +108,7 @@
                                                                     </tbody>
                                                                 </table>
                                                                 <script>
-                                                                    function CancelTicket(code) {
+                                                                    function CancelTicket(code, user_type) {
                                                                         var ok = confirm("Are you sure to Cancel the Ticket?")
                                                                         if (ok) {
 
@@ -109,7 +118,7 @@
                                                                                     document.getElementById("notification").innerHTML = this.responseText;
                                                                                 }
                                                                             };
-                                                                            xmlhttp.open("GET", "./helpers/cancel_ticket.php?ticket_code=" + code);
+                                                                            xmlhttp.open("GET", "./helpers/cancel_ticket.php?ticket_code=" + code + "&&user_type=" + user_type);
                                                                             xmlhttp.send();
                                                                         }
                                                                     }
@@ -126,7 +135,7 @@
                                                                                     document.getElementById("notification").innerHTML = this.responseText;
                                                                                 }
                                                                             };
-                                                                            xmlhttp.open("GET", "./helpers/ticket_delete.php?ticket_code=" + code);
+                                                                            xmlhttp.open("GET", "./helpers/ticket_delete.php?ticket_id=" + code);
                                                                             xmlhttp.send();
                                                                         }
                                                                     }

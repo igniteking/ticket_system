@@ -1,0 +1,14 @@
+[15-Sep-2023 14:25:58 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: ALTER command denied to user 'chaloqgz_waterpark'@'localhost' for table 'ticket' in /home1/chaloqgz/public_html/new_app/helpers/ticket_delete.php:14
+Stack trace:
+#0 /home1/chaloqgz/public_html/new_app/helpers/ticket_delete.php(14): mysqli_query(Object(mysqli), 'ALTER TABLE `wa...')
+#1 {main}
+  thrown in /home1/chaloqgz/public_html/new_app/helpers/ticket_delete.php on line 14
+[15-Sep-2023 14:26:10 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: ALTER command denied to user 'chaloqgz_waterpark'@'localhost' for table 'ticket' in /home1/chaloqgz/public_html/new_app/helpers/ticket_delete.php:14
+Stack trace:
+#0 /home1/chaloqgz/public_html/new_app/helpers/ticket_delete.php(14): mysqli_query(Object(mysqli), 'ALTER TABLE `wa...')
+#1 {main}
+  thrown in /home1/chaloqgz/public_html/new_app/helpers/ticket_delete.php on line 14
+[18-Sep-2023 17:56:19 UTC] PHP Warning:  include(../connection/connection.php): Failed to open stream: No such file or directory in /home1/chaloqgz/public_html/new_app/helpers/logout.php on line 1
+[18-Sep-2023 17:56:19 UTC] PHP Warning:  include(): Failed opening '../connection/connection.php' for inclusion (include_path='.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home1/chaloqgz/public_html/new_app/helpers/logout.php on line 1
+[19-Sep-2023 08:20:54 UTC] PHP Warning:  include(../connection/connection.php): Failed to open stream: No such file or directory in /home1/chaloqgz/public_html/app/helpers/logout.php on line 1
+[19-Sep-2023 08:20:54 UTC] PHP Warning:  include(): Failed opening '../connection/connection.php' for inclusion (include_path='.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home1/chaloqgz/public_html/app/helpers/logout.php on line 1
