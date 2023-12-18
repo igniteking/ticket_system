@@ -483,6 +483,7 @@
                                                                         while ($rows = mysqli_fetch_array($fetch_data_index)) {
                                                                             $index_ticket_id = $rows['id'];
                                                                             $index_ticket_username = $rows['ticket_username'];
+                                                                            $ticket_code = $rows['ticket_code'];
                                                                             $index_ticket_quantity = $rows['ticket_quantity'];
                                                                             $index_ticket_name = $rows['ticket_name'];
                                                                             $index_ticket_check_in_date = $rows['ticket_check_in_date'];
@@ -535,6 +536,8 @@
                                                                                     <td class="">' . $index_payment_method . '</span></td>
                                                                                     <td class="">' . $index_cancel_ticket . '</span></td>
                                                                                     <td class="">' . $index_created_at . '</span></td>
+                                                                                    <td class=""><a href="./ticket_view.php?ticket_code=' . $ticket_code . '&&type=b2b" class="btn btn-sm btn-primary text-white">View</a></td>
+
                                                                                 </tr>';
                                                                         }
                                                                         echo '

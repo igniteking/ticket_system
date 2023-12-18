@@ -66,6 +66,7 @@ if ($payment_type != '') {
                     $index_ticket_id = $rows['id'];
                     $index_ticket_gst = $rows['gst'];
                     $gst_array[$j] = $index_ticket_gst;
+                    $ticket_code = $rows['ticket_code'];
                     $index_ticket_username = $rows['ticket_username'];
                     $index_ticket_user_email = $rows['ticket_user_email'];
                     $index_ticket_quantity = $rows['ticket_quantity'];
@@ -144,6 +145,7 @@ if ($payment_type != '') {
                                                                                     <td class="">' . $index_payment_method . '</span></td>
                                                                                     <td class="">' . $index_cancel_ticket . '</span></td>
                                                                                     <td class="">' . $index_created_at . '</span></td>
+                                                                                    <td class=""><a href="./ticket_view.php?ticket_code=' . $ticket_code . '&&type=b2b" class="btn btn-sm btn-primary text-white">View</a></td>
                                                                             </tr>';
                 }
                 echo '
@@ -249,6 +251,7 @@ if ($payment_type != '') {
                     $index_ticket_id = $rows['id'];
                     $index_ticket_gst = $rows['gst'];
                     $gst_array[$j] = $index_ticket_gst;
+                    $ticket_code = $rows['ticket_code'];
                     $index_ticket_username = $rows['ticket_username'];
                     $index_ticket_user_email = $rows['ticket_user_email'];
                     $index_ticket_quantity = $rows['ticket_quantity'];
@@ -327,6 +330,7 @@ if ($payment_type != '') {
                                                                                     <td class="">' . $index_payment_method . '</span></td>
                                                                                     <td class="">' . $index_cancel_ticket . '</span></td>
                                                                                     <td class="">' . $index_created_at . '</span></td>
+                                                                                    <td class=""><a href="./ticket_view.php?ticket_code=' . $ticket_code . '" class="btn btn-sm btn-primary text-white">View</a></td>
                                                                             </tr>';
                 }
                 echo '
@@ -433,6 +437,7 @@ if ($payment_type != '') {
                     $index_ticket_id = $rows['id'];
                     $index_ticket_gst = $rows['gst'];
                     $gst_array[$j] = $index_ticket_gst;
+                    $ticket_code = $rows['ticket_code'];
                     $index_ticket_username = $rows['ticket_username'];
                     $index_ticket_user_email = $rows['ticket_user_email'];
                     $index_ticket_quantity = $rows['ticket_quantity'];
@@ -511,6 +516,7 @@ if ($payment_type != '') {
                                                                                     <td class="">' . $index_payment_method . '</span></td>
                                                                                     <td class="">' . $index_cancel_ticket . '</span></td>
                                                                                     <td class="">' . $index_created_at . '</span></td>
+                                                                                    <td class=""><a href="./ticket_view.php?ticket_code=' . $ticket_code . '&&type=b2b" class="btn btn-sm btn-primary text-white">View</a></td>
                                                                             </tr>';
                 }
                 echo '
@@ -615,6 +621,7 @@ if ($payment_type != '') {
                     $index_ticket_id = $rows['id'];
                     $index_ticket_gst = $rows['gst'];
                     $gst_array[$j] = $index_ticket_gst;
+                    $ticket_code = $rows['ticket_code'];
                     $index_ticket_username = $rows['ticket_username'];
                     $index_ticket_user_email = $rows['ticket_user_email'];
                     $index_ticket_quantity = $rows['ticket_quantity'];
@@ -693,6 +700,7 @@ if ($payment_type != '') {
                                                                                     <td class="">' . $index_payment_method . '</span></td>
                                                                                     <td class="">' . $index_cancel_ticket . '</span></td>
                                                                                     <td class="">' . $index_created_at . '</span></td>
+                                                                                    <td class=""><a href="./ticket_view.php?ticket_code=' . $ticket_code . '" class="btn btn-sm btn-primary text-white">View</a></td>
                                                                             </tr>';
                 }
                 echo '

@@ -82,7 +82,7 @@
                                                                                 if ($cancel_ticekt == 1) {
                                                                                     echo "<p>Ticket Canceled!</p>";
                                                                                 } else { ?>
-                                                                                    <a href="./invoice.php?ticket_code=<?= $ticket_code ?>"><button class="btn btn-outline-primary">Print Ticket</button></a>
+                                                                                    <a href="./invoice.php?ticket_code=<?= $ticket_code ?>&&type=b2b"><button class="btn btn-outline-primary">Print Ticket</button></a>
                                                                                     <button class="btn btn-outline-danger" onclick="CancelTicket(<?= $ticket_code ?>)">Cancel Ticket</button></a>
                                                                                 <?php
                                                                                 }

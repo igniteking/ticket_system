@@ -46,6 +46,7 @@ if ($type == 'b2b') {
             $index_ticket_id = $rows['id'];
             $index_ticket_gst = $rows['gst'];
             $gst_array[$j] = $index_ticket_gst;
+            $ticket_code = $rows['ticket_code'];
             $index_ticket_username = $rows['ticket_username'];
             $index_ticket_user_email = $rows['ticket_user_email'];
             $index_ticket_quantity = $rows['ticket_quantity'];
@@ -124,6 +125,7 @@ if ($type == 'b2b') {
                     <td class="">' . $index_payment_method . '</span></td>
                     <td class="">' . $index_cancel_ticket . '</span></td>
                     <td class="">' . $index_created_at . '</span></td>
+                    <td class=""><a href="./ticket_view.php?ticket_code=' . $ticket_code . '&&type=b2b" class="btn btn-sm btn-primary text-white">View</a></td>
             </tr>';
         }
         echo '
@@ -197,6 +199,7 @@ if ($type == 'b2b') {
                                                                                             <th>Method</th>
                                                                                             <th>Ticket Status</th>
                                                                                             <th>Date</th>
+                                                                                            <th>Action(s)</th>
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody>';
@@ -206,6 +209,7 @@ if ($type == 'b2b') {
             $index_ticket_id = $rows['id'];
             $index_ticket_gst = $rows['gst'];
             $gst_array[$j] = $index_ticket_gst;
+            $ticket_code = $rows['ticket_code'];
             $index_ticket_username = $rows['ticket_username'];
             $index_ticket_user_email = $rows['ticket_user_email'];
             $index_ticket_quantity = $rows['ticket_quantity'];
@@ -273,17 +277,18 @@ if ($type == 'b2b') {
                                                                             <tr>
                                                                                     <td class="">' . $index_ticket_id . '</td>
                                                                                     <td class="">' . $index_ticket_username . '</td>
-                                                                                    <td class="">' . $index_ticket_user_email . '</span></td>
-                                                                                    <td class="">' . $index_ticket_quantity = str_replace(",", "<br>", $index_ticket_quantity) . '</span></td>
-                                                                                    <td class="">' . $index_ticket_name = str_replace(",", "<br>", $index_ticket_name) . '</span></td>
-                                                                                    <td class="">' . $index_ticket_check_in_date . '</span></td>
-                                                                                    <td class="">' . $index_discount . '</span></td>
-                                                                                    <td class="">' . $index_discount_pt . '</span></td>
-                                                                                    <td class="">' . $index_totalprice . ' INR</span></td>
-                                                                                    <td class="">' . $index_ticket_gst . '</span></td>
-                                                                                    <td class="">' . $index_payment_method . '</span></td>
-                                                                                    <td class="">' . $index_cancel_ticket . '</span></td>
-                                                                                    <td class="">' . $index_created_at . '</span></td>
+                                                                                    <td class="">' . $index_ticket_user_email . '</td>
+                                                                                    <td class="">' . $index_ticket_quantity = str_replace(",", "<br>", $index_ticket_quantity) . '</td>
+                                                                                    <td class="">' . $index_ticket_name = str_replace(",", "<br>", $index_ticket_name) . '</td>
+                                                                                    <td class="">' . $index_ticket_check_in_date . '</td>
+                                                                                    <td class="">' . $index_discount . '</td>
+                                                                                    <td class="">' . $index_discount_pt . '</td>
+                                                                                    <td class="">' . $index_totalprice . ' INR</td>
+                                                                                    <td class="">' . $index_ticket_gst . '</td>
+                                                                                    <td class="">' . $index_payment_method . '</td>
+                                                                                    <td class="">' . $index_cancel_ticket . '</td>
+                                                                                    <td class="">' . $index_created_at . '</td>
+                                                                                    <td class=""><a href="./ticket_view.php?ticket_code=' . $ticket_code . '" class="btn btn-sm btn-primary text-white">View</a></td>
                                                                             </tr>';
         }
         echo '
