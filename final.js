@@ -182,12 +182,14 @@ function billTotal(str, id) {
   var package_discount_inclusive = document.getElementById(
     "package_discount_inclusive" + id
   ).value;
+
   package_discount_inclusivestr = package_discount_inclusive.toString();
   if (package_discount_inclusivestr.length > 0) {
     var package_discount_inclusive_final =
       package_discount_inclusive * quantity;
     totalValue = totalValue - package_discount_inclusive_final;
   } else {
+    var package_discount_inclusive_final = " ";
     var total = package_price * quantity;
   }
   var package_price = document.getElementById("package_price" + id).innerText;
@@ -229,14 +231,20 @@ function billTotal(str, id) {
   document.getElementById("print_ticket_price" + id).innerText =
     "₹" + totalValue;
   document.getElementById("print_ticket_discount" + id).innerText =
-    package_discount_inclusive;
+    package_discount_inclusive_final;
   document.getElementById("print_bill_quantity" + id).innerText =
     "x" + quantity;
   document.getElementById("sgst_print").innerText = "₹" + excludingGST;
   document.getElementById("cgst_print").innerText = "₹" + excludingGST;
+  var discount_fetch = document.getElementById("discount").value;
+  document.getElementById("print_discount_total").innerText =
+    "₹" + discount_fetch;
   document.getElementById("hidden_print").innerText = excludingGST;
-  document.getElementById("print_grand_total").innerText = "₹" + finalvalue;
+  document.getElementById("print_grand_total").innerText = finalvalue;
   document.getElementById("gstAmount_fill").innerText = "₹" + newAmount;
+  var testtowseifslkg = finalvalue - discount_fetch;
+  document.getElementById("print_total_payable").innerText =
+    "₹" + testtowseifslkg;
   document.getElementById("bill_invoice").innerText =
     document.getElementById("bill_invoice_value").value;
   var print_bill_quantity1 = document.querySelectorAll("[id^='bill_quantity']");

@@ -574,10 +574,17 @@ if (isset($_SESSION['email'])) {
                                         </small>
                                         <div class="ap_inbill_value">-0.01</div>
                                     </div> -->
-
+                                    <div class="ap_inbill_list_in">
+                                        <div class="ap_inbill_title ap_inbill_focus">Total Amount:</div>
+                                        <div class="ap_inbill_value ap_inbill_focus" id="print_grand_total">6000.00</div>
+                                    </div>
+                                    <div class="ap_inbill_list_in">
+                                        <div class="ap_inbill_title ap_inbill_focus">Discount:</div>
+                                        <div class="ap_inbill_value ap_inbill_focus" id="print_discount_total"></div>
+                                    </div>
                                     <div class="ap_inbill_list_in">
                                         <div class="ap_inbill_title ap_inbill_focus">Grand Total:</div>
-                                        <div class="ap_inbill_value ap_inbill_focus" id="print_grand_total">6000.00</div>
+                                        <div class="ap_inbill_value ap_inbill_focus" id="print_total_payable"></div>
                                     </div>
                                     <tr>
                                         <td>Paid Via </td>
