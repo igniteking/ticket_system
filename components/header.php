@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="targetElement">
 
 <head>
   <!-- Required meta tags -->
@@ -26,3 +26,8 @@
   <link rel="shortcut icon" href="./assets/images/logo.svg" />
 
 </head>
+<style>
+  #targetElement {
+    transition: opacity 0.5s ease-in-out;
+  }
+</style>
